@@ -2,12 +2,8 @@ jQuery(document).ready(function($){
 
 	var theses = generateTheses(7);
 	var students = generateStudents(80);
-	console.log(students);
-	console.log(theses);
-	
-	for(i=0;i<students.length;i++){
-		$('.students tbody').append('<tr><td>'+ students[i].id +'</td><td>'+ students[i].preferences.thesis_id[0] +' <em>'+theses[students[i].preferences.thesis_id[0]].teacher+'</em></td><td>'+ students[i].preferences.thesis_id[1] +' <em>'+theses[students[i].preferences.thesis_id[1]].teacher+'</em></td><td>'+ students[i].preferences.thesis_id[2] +' <em>'+theses[students[i].preferences.thesis_id[2]].teacher+'</em></td>``<td>'+ students[i].preferences.friend_id +'</td><td></td></tr>');
-	}
+	// console.log(students);
+	// console.log(theses);
 	
 	for(i=0;i<theses.length;i++){
 		var first = 0;
@@ -29,9 +25,32 @@ jQuery(document).ready(function($){
 				not_chosen++;
 			}
 		}
-		chosen = first+second+third;
-		$('.theses tbody').append('<tr><td>'+theses[i].id+'</td><td>'+theses[i].teacher+'</td><td>'+first+'</td><td>'+second+'</td><td>'+third+'</td><td>'+chosen+'</td><td>'+not_chosen+'</td><td></td></tr>');
+		theses[i].selections.first = first;
+		theses[i].selections.second = second;
+		theses[i].selections.third = third;
+		theses[i].selections.third = third;
+		theses[i].selections.not_chosen = not_chosen;
+		theses[i].selections.chosen = first+second+third;
 	}
+	var smallest = students.length;
+	
+	for(i=0;i<theses.length;i++){
+		if(theses[i].selections.first < theses[i].spaces.total){
+			for(j=0;j<students.length;j++){
+				if(students[j].preferences.thesis_id[0] == i){
+					console.log("hwhw");
+					students[j].enrolled_thesis = i;
+					theses[i].enrolled_students.push(j);
+				}
+			}
+		}
+		$('.theses tbody').append('<tr><td>'+theses[i].id+'</td><td>'+theses[i].teacher+'</td><td>'+theses[i].selections.first+'</td><td>'+theses[i].selections.second+'</td><td>'+theses[i].selections.third+'</td><td>'+theses[i].selections.chosen+'</td><td>'+theses[i].selections.not_chosen+'</td><td>'+theses[i].preferred_students+'</td><td>'+theses[i].enrolled_students+'</td></tr>');
+	}
+	
+	for(i=0;i<students.length;i++){
+		$('.students tbody').append('<tr><td>'+ students[i].id +'</td><td>'+ students[i].preferences.thesis_id[0] +' <em>'+theses[students[i].preferences.thesis_id[0]].teacher+'</em></td><td>'+ students[i].preferences.thesis_id[1] +' <em>'+theses[students[i].preferences.thesis_id[1]].teacher+'</em></td><td>'+ students[i].preferences.thesis_id[2] +' <em>'+theses[students[i].preferences.thesis_id[2]].teacher+'</em></td><td>'+ students[i].preferences.friend_id +'</td><td>'+students[i].enrolled_thesis+'</td></tr>');
+	}
+	
 	
 	function generateStudents(total){
 		var students = [];
@@ -45,8 +64,13 @@ jQuery(document).ready(function($){
 						t[0],t[1],t[2]
 					],
 					"friend_id": f
-				}
+				},
+				"enrolled_thesis" : -1
 			};
+		}
+		for(i=0;i<theses.length;i++){
+			// The 5 is the number of students a teacher can put dibs on
+			theses[i].preferred_students = uniqueRandom(Math.floor(Math.random()*5), total);
 		}
 		return students;
 	}
@@ -62,7 +86,9 @@ jQuery(document).ready(function($){
 					"taken":0,
 					"available":14,
 				},
-				"students" : []
+				"preferred_students" : [],
+				"enrolled_students" : [],
+				"selections" : {}
 			};
 		}
 		return sections;
@@ -99,6 +125,8 @@ jQuery(document).ready(function($){
 		}
 	}
 	
+	function sausage_factory(){
 
+	}
 	
 });
