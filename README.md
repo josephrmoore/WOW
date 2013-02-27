@@ -16,7 +16,9 @@ The current state of the algorithm is:
 3. If a student whose first choice is a contested section has been selected by the professor, that student is accepted.
 4. Students are scored by their and their friends' first choices.
 5. Students with the highest scores are accepted into contested sections until there are no spaces left.
+
 ***** Soon *****
+
 6. Repeat steps 1-5 for second and third choices.
 7. Handle remaining students* 
 
