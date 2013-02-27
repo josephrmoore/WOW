@@ -12,3 +12,4 @@ The second table shows the thesis sections, who teaches, how many students selec
 The current state of the algorithm is:
 
 1. For each thesis section, if the number of first choices is less than or equal to the number of spots, accept those students.
+2. If a thesis section has more interest than spots, the teacher's preferences are collected between all "interested students". Those who indicated that thesis as either a 1st, 2nd, or 3rd choice.
