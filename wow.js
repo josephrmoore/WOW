@@ -11,16 +11,20 @@ jQuery(document).ready(function($){
 		var third = 0;
 		var not_chosen = 0;
 		var chosen = 0;
+		var interested_students = [];
 		
 		for(j=0;j<students.length;j++){
 			if(students[j].preferences.thesis_id[0] == i){
 				first++;
+				interested_students.push(students[j].id);
 			}
 			if(students[j].preferences.thesis_id[1] == i){
 				second++;
+				interested_students.push(students[j].id);
 			}
 			if(students[j].preferences.thesis_id[2] == i){
 				third++;
+				interested_students.push(students[j].id);
 			}
 			if(students[j].preferences.thesis_id[2] != i && students[j].preferences.thesis_id[1] != i && students[j].preferences.thesis_id[0] != i){
 				not_chosen++;
@@ -48,24 +52,14 @@ jQuery(document).ready(function($){
 				}
 			}
 		}
-	
-		var l = theses[i].enrolled_students.length;
-		var avail = uniqueRandom(Math.floor(Math.random()*5), Math.floor(Math.random()*l));
-		var st = [];
-		console.log(avail);
-		for(j=0;j<avail.length;j++){
-			console.log(theses[i].enrolled_students);
-			// The 5 is the number of students a teacher can put dibs on
-			theses[i].preferred_students.push(theses[i].enrolled_students[avail[j]]);
-		}
 		
-		// for(j=0;j<students.length;j++){
-		// 	if(students[j].enrolled_thesis<0 && students[j].preferences.thesis_id[1] == i && theses[i].enrolled_students<theses[i].spaces.total && theses[i].){
-		// 		students[j].enrolled_thesis = i;
-		// 		theses[i].enrolled_students.push(j);
-		// 	}
-		// }
-		// 
+		var avail = uniqueRandom(Math.floor(Math.random()*5), Math.floor(Math.random()*interested_students.length));
+		if(theses[i].enrolled_students.length == 0){
+			for(j=0;j<avail.length;j++){
+			// The 5 is the number of students a teacher can put dibs on
+				theses[i].preferred_students.push(interested_students[avail[j]]);				
+			}
+		}
 		
 		$('.theses tbody').append('<tr><td>'+theses[i].id+'</td><td>'+theses[i].teacher+'</td><td>'+theses[i].selections.first+'</td><td>'+theses[i].selections.second+'</td><td>'+theses[i].selections.third+'</td><td>'+theses[i].selections.chosen+'</td><td>'+theses[i].selections.not_chosen+'</td><td>'+theses[i].preferred_students+'</td><td>'+theses[i].enrolled_students+'</td></tr>');
 	}
