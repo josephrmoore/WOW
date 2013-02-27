@@ -61,6 +61,13 @@ jQuery(document).ready(function($){
 			}
 		}
 		
+		for(j=0;j<theses[i].preferred_students.length;j++){
+			if(students[theses[i].preferred_students[j]].preferences.thesis_id[0] == i){
+				students[theses[i].preferred_students[j]].enrolled_thesis = i;
+				theses[i].enrolled_students.push(j);
+			}
+		}
+		
 		$('.theses tbody').append('<tr><td>'+theses[i].id+'</td><td>'+theses[i].teacher+'</td><td>'+theses[i].selections.first+'</td><td>'+theses[i].selections.second+'</td><td>'+theses[i].selections.third+'</td><td>'+theses[i].selections.chosen+'</td><td>'+theses[i].selections.not_chosen+'</td><td>'+theses[i].preferred_students+'</td><td>'+theses[i].enrolled_students+'</td></tr>');
 	}
 
