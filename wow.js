@@ -110,7 +110,7 @@ jQuery(document).ready(function($){
 				}
 			}
 		}
-		console.log(winner);
+		// console.log(winner);
 
 		for(i=winner.length-1;i>=0;i--){
 			// console.log("i " + i);
@@ -124,7 +124,7 @@ jQuery(document).ready(function($){
 						friend_pool.push(students[winner[i][j].preferences.friend_id[k]]);
 					}
 				}
-				if(friend_pool.length<=theses[winner[i][j].preferences.thesis_id[n]].spaces.available-theses[winner[i][j].preferences.thesis_id[n]].enrolled_students.length){
+				if(friend_pool.length<=theses[winner[i][j].preferences.thesis_id[n]].spaces.total-theses[winner[i][j].preferences.thesis_id[n]].enrolled_students.length){
 					for(k=0;k<friend_pool.length;k++){
 						// add student
 						friend_pool[k].enrolled_thesis = i;
@@ -137,17 +137,38 @@ jQuery(document).ready(function($){
 						}
 					}
 				}
-				console.log(friend_pool);
+				// console.log(friend_pool);
 			}
 		}
 	}
 	
 	for(i=0;i<students.length;i++){
 		if(students[i].enrolled_thesis == -1){
-			for(j=0;j<students[i].preferences.friend_id.length;j++){
-				if(theses[students[students[i].preferences.friend_id[j]].enrolled_thesis].enrolled_students.length<theses[students[students[i].preferences.friend_id[j]].enrolled_thesis].spaces.available){
-					students[i].enrolled_thesis = students[students[i].preferences.friend_id[j]].enrolled_thesis;
-					theses[students[students[i].preferences.friend_id[j]].enrolled_thesis].enrolled_students.push(students[i].id);
+			console.log("not enrolled");
+			if(students[i].preferences.friend_id.length>0){
+				console.log("has friends");
+				for(j=0;j<students[i].preferences.friend_id.length;j++){
+					if(theses[students[students[i].preferences.friend_id[j]].enrolled_thesis].enrolled_students.length<theses[students[students[i].preferences.friend_id[j]].enrolled_thesis].spaces.total){
+						console.log("friends' section");
+						students[i].enrolled_thesis = students[students[i].preferences.friend_id[j]].enrolled_thesis;
+						theses[students[students[i].preferences.friend_id[j]].enrolled_thesis].enrolled_students.push(students[i].id);
+						for(l=0;l<students_left.length;l++){
+							if(students_left[l].id == i){
+								students_left.splice(l,1);
+							}
+						}
+					}
+				}
+			}
+		}
+		if(students[i].enrolled_thesis == -1){
+			console.log("not enrolled");
+			for(j=0;j<theses.length;j++){
+				console.log(theses[j].enrolled_students);
+				if(theses[j].enrolled_students.length<theses[j].spaces.total){
+					console.log("space available");
+					students[i].enrolled_thesis = j;
+					theses[j].enrolled_students.push(students[i].id);
 					for(l=0;l<students_left.length;l++){
 						if(students_left[l].id == i){
 							students_left.splice(l,1);
@@ -159,59 +180,6 @@ jQuery(document).ready(function($){
 	}
 	
 		for(i=0;i<theses.length;i++){
-			// if(theses[i].enrolled_students.length<theses[i].spaces.total){
-			// 	for(j=highest_score;j>=0;j--){
-			// 		for(k=0;k<winner[j].length;k++){
-			// 			var friend_pool = [];
-			// 			for(l=0;l<winner[j][k].preferences.friend_id.length;l++){
-			// 				if(students[winner[j][k].preferences.friend_id[l]].preferences.thesis_id[0] == winner[j][k].preferences.thesis_id[0]){
-			// 					friend_pool.push(winner[j][k].preferences.friend_id[l]);
-			// 				}
-			// 			}
-			// 		}
-			// 	}
-			// 	for(l=0;l<friend_pool.length;l++){
-			// 		console.log(students[friend_pool[l]]);
-			// 		// // add student
-			// 		// students[friend_pool[l]].enrolled_thesis = i;
-			// 		// theses[i].enrolled_students.push(friend_pool[l]);
-			// 		// // update who's left
-			// 		// for(m=0;m<students_left.length;m++){
-			// 		// 	if(students_left[m] == students[friend_pool[l]].id){
-			// 		// 		students_left.splice(m,1);
-			// 		// 	}
-			// 		// }
-			// 	}
-			// }
-		
-			// for(j=highest_score;j>=0;j--){
-			// 	for(k=0;k<winner[j].length;k++){
-			// 		var friend_pool = [];
-			// 		for(l=0;l<winner[j][k].preferences.friend_id.length;l++){
-			// 			if(students[winner[j][k].preferences.friend_id[l]].preferences.thesis_id[0] == winner[j][k].preferences.thesis_id[0]){
-			// 				friend_pool.push(winner[j][k].preferences.friend_id[l]);
-			// 			}
-			// 		}
-			// 	
-			// 	}
-			// 	if(friend_pool.length <= theses[i].spaces.total){
-			// 		// console.log(friend_pool);
-			// 		// console.log(theses[i].spaces.total);
-			// 		for(l=0;l<friend_pool.length;l++){
-			// 			console.log(students[friend_pool[l]]);
-			// 			// // add student
-			// 			// students[friend_pool[l]].enrolled_thesis = i;
-			// 			// theses[i].enrolled_students.push(friend_pool[l]);
-			// 			// // update who's left
-			// 			// for(m=0;m<students_left.length;m++){
-			// 			// 	if(students_left[m] == students[friend_pool[l]].id){
-			// 			// 		students_left.splice(m,1);
-			// 			// 	}
-			// 			// }
-			// 		}
-			// 	}
-			// }
-			// console.log(theses[i].preferred_students);
 			$('.theses tbody').append('<tr><td>'+theses[i].id+'</td><td>'+theses[i].teacher+'</td><td>'+theses[i].selections.first+'</td><td>'+theses[i].selections.second+'</td><td>'+theses[i].selections.third+'</td><td>'+theses[i].selections.chosen+'</td><td>'+theses[i].selections.not_chosen+'</td><td>'+theses[i].preferred_students+'</td><td>'+theses[i].enrolled_students+'</td></tr>');
 		}
 	
