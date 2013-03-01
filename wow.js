@@ -54,8 +54,9 @@ jQuery(document).ready(function($){
 		}
 
 		for(i=0;i<theses.length;i++){
+			var choice = ['first','second','third'];
 			// There are fewer total 1st choices than spots available in the section
-			if(theses[i].selections.first <= theses[i].spaces.total-theses[i].enrolled_students.length){
+			if(theses[i].selections[choice[n]] <= theses[i].spaces.total-theses[i].enrolled_students.length){
 				for(j=0;j<students.length;j++){
 					// This student's first choice is this section
 					if(students[j].preferences.thesis_id[n] == i){
