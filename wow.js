@@ -137,15 +137,6 @@ jQuery(document).ready(function($){
 
 		// 3 = Number of choices a student can make, this loop runs through 1st, 2nd, & 3rd choices
 		for(n=0;n<3;n++){
-			// Calculate students scores
-			for(i=0;i<students.length;i++){
-				students_left.push(students[i].id);
-				for(k=0;k<students[i].preferences.friend_id.length;k++){
-					if(students[students[i].preferences.friend_id[k]].preferences.thesis_id[n] == students[i].preferences.thesis_id[n]){
-						students[i].score++;
-					}
-				}
-			}
 			
 			// Add students to non-contested sections 
 			for(i=0;i<theses.length;i++){
@@ -192,6 +183,8 @@ jQuery(document).ready(function($){
 					}
 				}
 			}
+
+			// Placing students by friend preference
 			
 			for(j=0;j<students_left.length;j++){
 				var student = students[students_left[j]];
@@ -202,6 +195,7 @@ jQuery(document).ready(function($){
 						var friend = students[friend_id];
 						var friend_thesis_id = friend.enrolled_thesis;
 						var friend_thesis = theses[friend_thesis_id];
+						// Check that 1.) the friend has a thesis 2.) there is room in that section, and 3.) that section is one of the student's choices
 						if(friend_thesis_id != -1 && friend_thesis.enrolled_students.length<friend_thesis.spaces.total && student.preferences.thesis_id[n+1] == friend_thesis_id){
 							student.enrolled_thesis = friend.enrolled_thesis;
 							friend_thesis.enrolled_students.push(student.id);
@@ -213,50 +207,25 @@ jQuery(document).ready(function($){
 						}
 					}
 				}
+				// Duplicate loop to "settle" for a section that's not one of your choices, but one of your friends is in
+				for(k=0;k<friends.length;k++){
+					if(n<2){
+						var friend_id = friends[k];
+						var friend = students[friend_id];
+						var friend_thesis_id = friend.enrolled_thesis;
+						var friend_thesis = theses[friend_thesis_id];
+						if(friend_thesis_id != -1 && friend_thesis.enrolled_students.length<friend_thesis.spaces.total){
+							student.enrolled_thesis = friend.enrolled_thesis;
+							friend_thesis.enrolled_students.push(student.id);
+							for(l=0;l<students_left.length;l++){
+								if(students_left[l] == students_left[j]){
+									students_left.splice(l,1);
+								}
+							}
+						}
+					}
+				}
 			}
-		// 	
-		// 	// Find out who has the highest score 
-		// 	for(j=0;j<students_left.length;j++){
-		// 		if(students[students_left[j]].score > highest_score){
-		// 			highest_score = students[students_left[j]].score;
-		// 		}
-		// 	}
-		// 	// Re-ordering students left by score
-		// 	for(j=highest_score;j>=0;j--){
-		// 		winner[j] = [];
-		// 		for(k=0;k<students_left.length;k++){
-		// 			if(students[students_left[k]].score == j){
-		// 				winner[j].push(students[students_left[k]]);
-		// 			}
-		// 		}
-		// 	}
-		// 
-		// 	// Add winners by highest scores first
-		// 	for(i=winner.length-1;i>=0;i--){
-		// 		for(j=0;j<winner[i].length;j++){
-		// 			var friend_pool = [];
-		// 			// Collect all that students' friends
-		// 			for(k=0;k<winner[i][j].preferences.friend_id.length;k++){
-		// 				if(students[winner[i][j].preferences.friend_id[k]].preferences.thesis_id[n] == winner[i][j].preferences.thesis_id[n] && students[winner[i][j].preferences.friend_id[k]].enrolled_thesis<0){
-		// 					friend_pool.push(students[winner[i][j].preferences.friend_id[k]]);
-		// 				}
-		// 			}
-		// 			// If there is space to add the student and all their friends, add them all
-		// 			if(friend_pool.length<=theses[winner[i][j].preferences.thesis_id[n]].spaces.total-theses[winner[i][j].preferences.thesis_id[n]].enrolled_students.length){
-		// 				for(k=0;k<friend_pool.length;k++){
-		// 					// add student
-		// 					friend_pool[k].enrolled_thesis = i;
-		// 					theses[winner[i][j].preferences.thesis_id[n]].enrolled_students.push(friend_pool[k].id);
-		// 					// update who's left
-		// 					for(l=0;l<students_left.length;l++){
-		// 						if(students_left[l].id == friend_pool[k].id){
-		// 							students_left.splice(l,1);
-		// 						}
-		// 					}
-		// 				}
-		// 			}
-		// 		}
-		// 	}
 		}
 		
 		// "Else" condition for those not added after 1st, 2nd, & 3rd choices
@@ -275,7 +244,6 @@ jQuery(document).ready(function($){
 						var friend_thesis_id = friend.enrolled_thesis;
 						if(friend_thesis_id != -1){
 							var friend_thesis = theses[friend_thesis_id];
-							console.log(friend_thesis);
 							if(friend_thesis.enrolled_students.length<friend_thesis.spaces.total){
 								student.enrolled_thesis = friend_thesis_id;
 								friend_thesis.enrolled_students.push(student.id);
@@ -323,7 +291,19 @@ jQuery(document).ready(function($){
 				got_third++
 			} else {
 				got_none++;
-			}			
+			}
+			var friends = students[i].preferences.friend_id;
+			var flag = false;
+			for(j=0;j<friends.length;j++){
+				var friend_id = friends[j];
+				var friend = students[friend_id];
+				if(friend.enrolled_thesis = students[i].enrolled_thesis){
+					flag = true;
+				}
+			}
+			if(flag){
+				got_friends++;
+			}
 		}
 
 		got_one = got_first+got_second+got_third;
@@ -333,12 +313,13 @@ jQuery(document).ready(function($){
 			"got_second" : got_second,
 			"got_third" : got_third,
 			"got_none" : got_none,
-			"got_one" : got_one
+			"got_one" : got_one,
+			"got_friends" : got_friends
 		}
 
 		
 
-		$('.dataviz tbody').append('<tr><td>'+dataviz.got_first+' -> '+ (dataviz.got_first/students.length)*100 +'%</td><td>'+dataviz.got_second+' -> '+ (dataviz.got_second/students.length)*100+'%</td><td>'+dataviz.got_third+' -> '+ (dataviz.got_third/students.length)*100+'%</td><td>'+dataviz.got_one+' -> '+ (dataviz.got_one/students.length)*100+'%</td><td>'+dataviz.got_none+' -> '+ (dataviz.got_none/students.length)*100+'%</td><td></td></tr>');
+		$('.dataviz tbody').append('<tr><td>'+dataviz.got_first+' -> '+ (dataviz.got_first/students.length)*100 +'%</td><td>'+dataviz.got_second+' -> '+ (dataviz.got_second/students.length)*100+'%</td><td>'+dataviz.got_third+' -> '+ (dataviz.got_third/students.length)*100+'%</td><td>'+dataviz.got_one+' -> '+ (dataviz.got_one/students.length)*100+'%</td><td>'+dataviz.got_none+' -> '+ (dataviz.got_none/students.length)*100+'%</td><td>'+dataviz.got_friends+' -> '+ (dataviz.got_friends/students.length)*100 +'%</td></tr>');
 
 	}
 	
