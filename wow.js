@@ -193,41 +193,20 @@ jQuery(document).ready(function($){
 				}
 			}
 			
-			// Find out who has the highest score 
 			for(j=0;j<students_left.length;j++){
-				if(students[students_left[j]].score > highest_score){
-					highest_score = students[students_left[j]].score;
-				}
-			}
-			// Re-ordering students left by score
-			for(j=highest_score;j>=0;j--){
-				winner[j] = [];
-				for(k=0;k<students_left.length;k++){
-					if(students[students_left[k]].score == j){
-						winner[j].push(students[students_left[k]]);
-					}
-				}
-			}
-
-			// Add winners by highest scores first
-			for(i=winner.length-1;i>=0;i--){
-				for(j=0;j<winner[i].length;j++){
-					var friend_pool = [];
-					// Collect all that students' friends
-					for(k=0;k<winner[i][j].preferences.friend_id.length;k++){
-						if(students[winner[i][j].preferences.friend_id[k]].preferences.thesis_id[n] == winner[i][j].preferences.thesis_id[n] && students[winner[i][j].preferences.friend_id[k]].enrolled_thesis<0){
-							friend_pool.push(students[winner[i][j].preferences.friend_id[k]]);
-						}
-					}
-					// If there is space to add the student and all their friends, add them all
-					if(friend_pool.length<=theses[winner[i][j].preferences.thesis_id[n]].spaces.total-theses[winner[i][j].preferences.thesis_id[n]].enrolled_students.length){
-						for(k=0;k<friend_pool.length;k++){
-							// add student
-							friend_pool[k].enrolled_thesis = i;
-							theses[winner[i][j].preferences.thesis_id[n]].enrolled_students.push(friend_pool[k].id);
-							// update who's left
+				var student = students[students_left[j]];
+				var friends = student.preferences.friend_id;
+				for(k=0;k<friends.length;k++){
+					if(n<2){
+						var friend_id = friends[k];
+						var friend = students[friend_id];
+						var friend_thesis_id = friend.enrolled_thesis;
+						var friend_thesis = theses[friend_thesis_id];
+						if(friend_thesis_id != -1 && friend_thesis.enrolled_students.length<friend_thesis.spaces.total && student.preferences.thesis_id[n+1] == friend_thesis_id){
+							student.enrolled_thesis = friend.enrolled_thesis;
+							friend_thesis.enrolled_students.push(student.id);
 							for(l=0;l<students_left.length;l++){
-								if(students_left[l].id == friend_pool[k].id){
+								if(students_left[l] == students_left[j]){
 									students_left.splice(l,1);
 								}
 							}
@@ -235,24 +214,75 @@ jQuery(document).ready(function($){
 					}
 				}
 			}
+		// 	
+		// 	// Find out who has the highest score 
+		// 	for(j=0;j<students_left.length;j++){
+		// 		if(students[students_left[j]].score > highest_score){
+		// 			highest_score = students[students_left[j]].score;
+		// 		}
+		// 	}
+		// 	// Re-ordering students left by score
+		// 	for(j=highest_score;j>=0;j--){
+		// 		winner[j] = [];
+		// 		for(k=0;k<students_left.length;k++){
+		// 			if(students[students_left[k]].score == j){
+		// 				winner[j].push(students[students_left[k]]);
+		// 			}
+		// 		}
+		// 	}
+		// 
+		// 	// Add winners by highest scores first
+		// 	for(i=winner.length-1;i>=0;i--){
+		// 		for(j=0;j<winner[i].length;j++){
+		// 			var friend_pool = [];
+		// 			// Collect all that students' friends
+		// 			for(k=0;k<winner[i][j].preferences.friend_id.length;k++){
+		// 				if(students[winner[i][j].preferences.friend_id[k]].preferences.thesis_id[n] == winner[i][j].preferences.thesis_id[n] && students[winner[i][j].preferences.friend_id[k]].enrolled_thesis<0){
+		// 					friend_pool.push(students[winner[i][j].preferences.friend_id[k]]);
+		// 				}
+		// 			}
+		// 			// If there is space to add the student and all their friends, add them all
+		// 			if(friend_pool.length<=theses[winner[i][j].preferences.thesis_id[n]].spaces.total-theses[winner[i][j].preferences.thesis_id[n]].enrolled_students.length){
+		// 				for(k=0;k<friend_pool.length;k++){
+		// 					// add student
+		// 					friend_pool[k].enrolled_thesis = i;
+		// 					theses[winner[i][j].preferences.thesis_id[n]].enrolled_students.push(friend_pool[k].id);
+		// 					// update who's left
+		// 					for(l=0;l<students_left.length;l++){
+		// 						if(students_left[l].id == friend_pool[k].id){
+		// 							students_left.splice(l,1);
+		// 						}
+		// 					}
+		// 				}
+		// 			}
+		// 		}
+		// 	}
 		}
 		
 		// "Else" condition for those not added after 1st, 2nd, & 3rd choices
 		
 		for(i=0;i<students.length;i++){
+			var student = students[i];
 			// Student not enrolled in a thesis
-			if(students[i].enrolled_thesis == -1){
+			if(student.enrolled_thesis == -1){
 				// Student has friends
-				if(students[i].preferences.friend_id.length>0){
+				var friends = student.preferences.friend_id;
+				if(friends.length>0){
 					// If room left in their friends' thesis sections, add them there
-					for(j=0;j<students[i].preferences.friend_id.length;j++){
-						if(theses[students[students[i].preferences.friend_id[j]].enrolled_thesis].enrolled_students.length<theses[students[students[i].preferences.friend_id[j]].enrolled_thesis].spaces.total){
-							console.log("friends' section");
-							students[i].enrolled_thesis = students[students[i].preferences.friend_id[j]].enrolled_thesis;
-							theses[students[students[i].preferences.friend_id[j]].enrolled_thesis].enrolled_students.push(students[i].id);
-							for(l=0;l<students_left.length;l++){
-								if(students_left[l].id == i){
-									students_left.splice(l,1);
+					for(j=0;j<friends.length;j++){
+						var friend_id = friends[j];
+						var friend = students[friend_id];
+						var friend_thesis_id = friend.enrolled_thesis;
+						if(friend_thesis_id != -1){
+							var friend_thesis = theses[friend_thesis_id];
+							console.log(friend_thesis);
+							if(friend_thesis.enrolled_students.length<friend_thesis.spaces.total){
+								student.enrolled_thesis = friend_thesis_id;
+								friend_thesis.enrolled_students.push(student.id);
+								for(l=0;l<students_left.length;l++){
+									if(students_left[l].id == i){
+										students_left.splice(l,1);
+									}
 								}
 							}
 						}
