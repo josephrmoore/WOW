@@ -1,14 +1,12 @@
 jQuery(document).ready(function($){
 
-	// Initialize global variables
+	// Initialize global variables - generateThesis ***MUST*** always be before generateStudents
 	var students_left = [];
 	var theses = generateTheses(7);
 	var students = generateStudents(80);
-	// console.log(students);
 	var dataviz;
 	// This is the algorithm
 	sausage_factory();
-	// console.log(students);
 	// Get dataviz data
 	 dataviz = dataviz();
 	
