@@ -36,6 +36,11 @@ td em {
 td:last-child {
 	border-right:none;
 }
+
+.chart {
+	display:inline;
+	float:left;
+}
 </style>
 <div id="wrapper">
 	<table class="students">
@@ -47,7 +52,6 @@ td:last-child {
 			<th>Third Choice</th>
 			<th>Friends</th>
 			<th>Thesis Section ID</th>
-			<th>Score</th>
 		</tr>
 		</thead>
 		<tbody>
@@ -87,13 +91,18 @@ td:last-child {
 		<tbody>
 		</tbody>
 	</table>
-	
+	<div class="chart" id="chart_div1"></div>
+	<div class="chart" id="chart_div2"></div>
+	<div class="chart" id="chart_div3"></div>
 </div>
 
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>
   <script>window.jQuery || document.write('<script src="js/libs/jquery-1.7.1.min.js"><\/script>')</script>
-	<script type="text/javascript" src="wow.js"></script>
+	<!--Load the AJAX API-->
+	    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+		<script type="text/javascript" src="wow.js"></script>
+
   <!-- Asynchronous Google Analytics snippet. Change UA-XXXXX-X to be your site's ID.
        mathiasbynens.be/notes/async-analytics-snippet -->
   <script>
