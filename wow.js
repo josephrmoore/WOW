@@ -9,7 +9,7 @@ jQuery(document).ready(function($){
 
 	// Initialize global variables - generateThesis ***MUST*** always be before generateStudents
 	var students_left = [];
-	var theses = generateTheses(7);
+	var theses = generateTheses(6);
 	var students = generateStudents(80);
 	// This is the algorithm
 	sausage_factory();
