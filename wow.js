@@ -138,7 +138,7 @@ jQuery(document).ready(function($){
 			fr += ', ';
 		}
 		fr = fr.substr(0, fr.length-2);
-		$('.students tbody').append('<tr><td>'+ characters[i] +'</td><td>'+ sins[students[i].choices[0]] +'</td><td>'+ sins[students[i].choices[1]] +'</td><td>'+ sins[students[i].choices[2]] +'</td><td>'+ fr +'</td><td>'+sins[students[i].thesis]+'</td></tr>');
+		$('.students tbody').append('<tr><td>'+ characters[i] +'</td><td class="t">'+ sins[students[i].choices[0]] +'</td><td class="t">'+ sins[students[i].choices[1]] +'</td><td class="t">'+ sins[students[i].choices[2]] +'</td><td>'+ fr +'</td><td class="t">'+sins[students[i].thesis]+'</td></tr>');
 	}
 			
 	// Functions
