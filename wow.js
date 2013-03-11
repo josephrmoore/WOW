@@ -5,27 +5,15 @@ var got_none = 0;
 var got_one = 0;
 var got_friends = 0;
 
-var sins = [
-	'Sloth',
-	'Lust',
-	'Wrath',
-	'Pride',
-	'Greed',
-	'Gluttony',
-	'Envy'
-];
-
-var sins = [
-	'innovative',
-	'useful',
-	'aesthetic',
-	'understandable',
-	'unobtrusive',
-	'honest',
-	'long-lasting',
-	'detail',
-	'environmentally-firendly',
-	'little'
+var burroughs = [
+	'Manhattan',
+	'Brooklyn',
+	'Queens',
+	'Bronx',
+	'Staten Island',
+	'New Jersey',
+	'Westchester',
+	'Long Island'
 ];
 
 var characters = [
@@ -141,7 +129,7 @@ jQuery(document).ready(function($){
 		}
 		pr = pr.substr(0, pr.length-2);
 		en = en.substr(0, en.length-2);
-		$('.theses tbody').append('<tr><td>'+sins[i]+'</td><td>'+theses[i].choices[0]+'</td><td>'+theses[i].choices[1]+'</td><td>'+theses[i].choices[2]+'</td><td>'+theses[i].chosen+'</td><td>'+theses[i].not_chosen+'</td><td>'+pr+'</td><td>'+en+'</td></tr>');
+		$('.theses tbody').append('<tr><td>'+burroughs[i]+'</td><td>'+theses[i].choices[0]+'</td><td>'+theses[i].choices[1]+'</td><td>'+theses[i].choices[2]+'</td><td>'+theses[i].chosen+'</td><td>'+theses[i].not_chosen+'</td><td>'+pr+'</td><td>'+en+'</td></tr>');
 	}
 
 	for(var i=0;i<students.length;i++){
@@ -151,7 +139,7 @@ jQuery(document).ready(function($){
 			fr += ', ';
 		}
 		fr = fr.substr(0, fr.length-2);
-		$('.students tbody').append('<tr><td>'+ characters[i] +'</td><td class="t">'+ sins[students[i].choices[0]] +'</td><td class="t">'+ sins[students[i].choices[1]] +'</td><td class="t">'+ sins[students[i].choices[2]] +'</td><td>'+ fr +'</td><td class="t">'+sins[students[i].thesis]+'</td></tr>');
+		$('.students tbody').append('<tr><td>'+ characters[i] +'</td><td class="t">'+ burroughs[students[i].choices[0]] +'</td><td class="t">'+ burroughs[students[i].choices[1]] +'</td><td class="t">'+ burroughs[students[i].choices[2]] +'</td><td>'+ fr +'</td><td class="t">'+burroughs[students[i].thesis]+'</td></tr>');
 	}
 			
 	// Functions
