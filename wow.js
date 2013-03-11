@@ -5,6 +5,104 @@ var got_none = 0;
 var got_one = 0;
 var got_friends = 0;
 
+var sins = [
+	'Sloth',
+	'Lust',
+	'Wrath',
+	'Pride',
+	'Greed',
+	'Gluttony',
+	'Envy'
+];
+
+var characters = [
+	'Larry Stooge',
+	'Moe Stooge',
+	'Curly Stooge',
+	'Bugs Bunny',
+	'Elmer Fudd',
+	'Daffy Duck',
+	'Foghorn Leghorn',
+	'Sylvester',
+	'Tweety Bird',
+	'Marvin Martian',
+	'Wile E. Coyote',
+	'Road Runner',
+	'Speedy Gonzales',
+	'Pepe Le Pew',
+	'Petunia Pig',
+	'Yosemite Sam',
+	'Tasmanian Devil',
+	'Tasmanian She-Devil',
+	'Mickey Mouse',
+	'Pluto',
+	'Sluggo',
+	'Nancy',
+	'Charlie Brown',
+	'Linus',
+	'Lucy',
+	'Pigpen',
+	'Snoopy',
+	'Woodstock',
+	'Doctor Jekyll',
+	'Mister Hyde',
+	'Huey',
+	'Dewey',
+	'Louie',
+	'Pee-Wee Herman',
+	'Cowboy Curtis',
+	'Miss Yvonne',
+	'Globey',
+	'Randy',
+	'Pterri',
+	'Clockey',
+	'Floory',
+	'Dog Chair',
+	'Conky 2000',
+	'Jambi',
+	'Chairry',
+	'Mario',
+	'Luigi',
+	'Princess Peach',
+	'Toad',
+	'Bowser',
+	'Yoshi',
+	'Wario',
+	'Wa-Luigi',
+	'Donkey Kong',
+	'Diddy Kong',
+	'Dixie Kong',
+	'Cranky Kong',
+	'Candy Kong',
+	'Funky Kong',
+	'Maxwell Smart',
+	'Agent 99',
+	'Chief',
+	'Agent 13',
+	'Batman',
+	'Robin',
+	'Superman',
+	'Captain Marvel',
+	'Wonder Woman',
+	'Batgirl',
+	'Catwoman',
+	'Green Lantern',
+	'Flash',
+	'Daredevil',
+	'Invisible Woman',
+	'The Hulk',
+	'The Thing',
+	'Thor',
+	'Iron Man',
+	'Captain Kirk',
+	'Scotty',
+	'Bones',
+	'Spock',
+	'Jim',
+	'Uhura',
+	'Sulu'
+];
+
 jQuery(document).ready(function($){
 
 	// Initialize global variables - generateThesis ***MUST*** always be before generateStudents
@@ -18,11 +116,29 @@ jQuery(document).ready(function($){
 	
 	// Print to screen
 	for(var i=0;i<theses.length;i++){
-		$('.theses tbody').append('<tr><td>'+i+'</td><td>'+theses[i].teacher+'</td><td>'+theses[i].choices[0]+'</td><td>'+theses[i].choices[1]+'</td><td>'+theses[i].choices[2]+'</td><td>'+theses[i].chosen+'</td><td>'+theses[i].not_chosen+'</td><td>'+theses[i].teacher_pref+'</td><td>'+theses[i].enrolled+'</td></tr>');
+		var pr = '';
+		var en = '';
+		for(var j=0;j<theses[i].teacher_pref.length;j++){
+			pr += characters[theses[i].teacher_pref[j]];
+			pr += ', ';
+		}
+		for(var j=0;j<theses[i].enrolled.length;j++){
+			en += characters[theses[i].enrolled[j]];
+			en += ', ';
+		}
+		pr = pr.substr(0, pr.length-2);
+		en = en.substr(0, en.length-2);
+		$('.theses tbody').append('<tr><td>'+sins[i]+'</td><td>'+theses[i].choices[0]+'</td><td>'+theses[i].choices[1]+'</td><td>'+theses[i].choices[2]+'</td><td>'+theses[i].chosen+'</td><td>'+theses[i].not_chosen+'</td><td>'+pr+'</td><td>'+en+'</td></tr>');
 	}
 
 	for(var i=0;i<students.length;i++){
-		$('.students tbody').append('<tr><td>'+ i +'</td><td>'+ students[i].choices[0] +' <em>'+theses[students[i].choices[0]].teacher+'</em></td><td>'+ students[i].choices[1] +' <em>'+theses[students[i].choices[1]].teacher+'</em></td><td>'+ students[i].choices[2] +' <em>'+theses[students[i].choices[2]].teacher+'</em></td><td>'+ students[i].friends +'</td><td>'+students[i].thesis+'</td></tr>');
+		var fr = '';
+		for(var j=0;j<students[i].friends.length;j++){
+			fr += characters[students[i].friends[j]];
+			fr += ', ';
+		}
+		fr = fr.substr(0, fr.length-2);
+		$('.students tbody').append('<tr><td>'+ characters[i] +'</td><td>'+ sins[students[i].choices[0]] +'</td><td>'+ sins[students[i].choices[1]] +'</td><td>'+ sins[students[i].choices[2]] +'</td><td>'+ fr +'</td><td>'+sins[students[i].thesis]+'</td></tr>');
 	}
 			
 	// Functions
