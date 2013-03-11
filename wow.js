@@ -15,6 +15,19 @@ var sins = [
 	'Envy'
 ];
 
+var sins = [
+	'innovative',
+	'useful',
+	'aesthetic',
+	'understandable',
+	'unobtrusive',
+	'honest',
+	'long-lasting',
+	'detail',
+	'environmentally-firendly',
+	'little'
+];
+
 var characters = [
 	'Larry Stooge',
 	'Moe Stooge',
