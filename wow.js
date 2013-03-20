@@ -109,7 +109,14 @@ jQuery(document).ready(function($){
 	// Initialize global variables - generateThesis ***MUST*** always be before generateStudents
 	var students_left = [];
 	var theses = generateTheses(6);
-	var students = generateStudents(80);
+	var unshuffled_students = generateStudents(80);
+	var shuffled_ids = uniqueRandom(unshuffled_students.length, unshuffled_students.length);
+	var students = [];
+	for(var i=0;i<unshuffled_students.length;i++){
+		students[i] = unshuffled_students[shuffled_ids[i]];
+	}
+	console.log(students);
+	console.log(unshuffled_students);
 	// This is the algorithm
 	sausage_factory();
 	// Get dataviz data
@@ -139,7 +146,7 @@ jQuery(document).ready(function($){
 			fr += ', ';
 		}
 		fr = fr.substr(0, fr.length-2);
-		$('.students tbody').append('<tr><td>'+ characters[i] +'</td><td class="t">'+ burroughs[students[i].choices[0]] +'</td><td class="t">'+ burroughs[students[i].choices[1]] +'</td><td class="t">'+ burroughs[students[i].choices[2]] +'</td><td>'+ fr +'</td><td class="t">'+burroughs[students[i].thesis]+'</td></tr>');
+		$('.students tbody').append('<tr><td>'+ characters[students[i].id] +'</td><td class="t">'+ burroughs[students[i].choices[0]] +'</td><td class="t">'+ burroughs[students[i].choices[1]] +'</td><td class="t">'+ burroughs[students[i].choices[2]] +'</td><td>'+ fr +'</td><td class="t">'+burroughs[students[i].thesis]+'</td></tr>');
 	}
 			
 	// Functions
