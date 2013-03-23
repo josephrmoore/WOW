@@ -838,7 +838,7 @@ jQuery(document).ready(function($){
 	// Pre-Iteration
 		// For each section...
 		for(var i=0;i<theses.length;i++){
-			// See how many people picked it as their first choice
+			// See how many people picked it as their first choice. i=thesis section, 0=1st choice
 			var choosers = getChoice(i, 0);
 			// If the number of 1st choice students is less than the total allowable students for that section...
 			if(choosers.length<=theses[i].total){
@@ -856,7 +856,7 @@ jQuery(document).ready(function($){
 		for(var n=0;n<3;n++){
 			// For each section...
 			for(var i=0;i<theses.length;i++){
-				// Find out which students selected that section as this iteration's choice (1st, 2nd, or 3rd)
+				// Find out which students selected that section as this iteration's choice (1st, 2nd, or 3rd). i=thesis section, n=choice, 1-3
 				choosers = getChoice(i, n);
 				teacher_chosen = 0;
 				teacherChoice(i, choosers);
