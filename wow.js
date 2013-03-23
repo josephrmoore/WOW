@@ -3,7 +3,7 @@ var got_second = 0;
 var got_third = 0;
 var got_none = 0;
 var got_one = 0;
-var got_friends = 0;
+var got_peers = 0;
 
 var burroughs = [
 	'Manhattan',
@@ -15,6 +15,570 @@ var burroughs = [
 	'Westchester',
 	'Long Island'
 ];
+
+var student_data = [
+	{
+		"id": 0,
+		"NetID": "",
+		"choices" : [0,0,0],
+		"peers": [],
+		"thesis" : -1
+	},
+	{
+		"id": 1,
+		"NetID": "",
+		"choices" : [0,0,0],
+		"peers": [],
+		"thesis" : -1
+	},
+	{
+		"id": 2,
+		"NetID": "",
+		"choices" : [0,0,0],
+		"peers": [],
+		"thesis" : -1
+	},
+	{
+		"id": 3,
+		"NetID": "",
+		"choices" : [0,0,0],
+		"peers": [],
+		"thesis" : -1
+	},
+	{
+		"id": 4,
+		"NetID": "",
+		"choices" : [0,0,0],
+		"peers": [],
+		"thesis" : -1
+	},
+	{
+		"id": 5,
+		"NetID": "",
+		"choices" : [0,0,0],
+		"peers": [],
+		"thesis" : -1
+	},
+	{
+		"id": 6,
+		"NetID": "",
+		"choices" : [0,0,0],
+		"peers": [],
+		"thesis" : -1
+	},
+	{
+		"id": 7,
+		"NetID": "",
+		"choices" : [0,0,0],
+		"peers": [],
+		"thesis" : -1
+	},
+	{
+		"id": 8,
+		"NetID": "",
+		"choices" : [0,0,0],
+		"peers": [],
+		"thesis" : -1
+	},
+	{
+		"id": 9,
+		"NetID": "",
+		"choices" : [0,0,0],
+		"peers": [],
+		"thesis" : -1
+	},
+	{
+		"id": 10,
+		"NetID": "",
+		"choices" : [0,0,0],
+		"peers": [],
+		"thesis" : -1
+	},
+	{
+		"id": 11,
+		"NetID": "",
+		"choices" : [0,0,0],
+		"peers": [],
+		"thesis" : -1
+	},
+	{
+		"id": 12,
+		"NetID": "",
+		"choices" : [0,0,0],
+		"peers": [],
+		"thesis" : -1
+	},
+	{
+		"id": 13,
+		"NetID": "",
+		"choices" : [0,0,0],
+		"peers": [],
+		"thesis" : -1
+	},
+	{
+		"id": 14,
+		"NetID": "",
+		"choices" : [0,0,0],
+		"peers": [],
+		"thesis" : -1
+	},
+	{
+		"id": 15,
+		"NetID": "",
+		"choices" : [0,0,0],
+		"peers": [],
+		"thesis" : -1
+	},
+	{
+		"id": 16,
+		"NetID": "",
+		"choices" : [0,0,0],
+		"peers": [],
+		"thesis" : -1
+	},
+	{
+		"id": 17,
+		"NetID": "",
+		"choices" : [0,0,0],
+		"peers": [],
+		"thesis" : -1
+	},
+	{
+		"id": 18,
+		"NetID": "",
+		"choices" : [0,0,0],
+		"peers": [],
+		"thesis" : -1
+	},
+	{
+		"id": 19,
+		"NetID": "",
+		"choices" : [0,0,0],
+		"peers": [],
+		"thesis" : -1
+	},
+	{
+		"id": 20,
+		"NetID": "",
+		"choices" : [0,0,0],
+		"peers": [],
+		"thesis" : -1
+	},
+	{
+		"id": 21,
+		"NetID": "",
+		"choices" : [0,0,0],
+		"peers": [],
+		"thesis" : -1
+	},
+	{
+		"id": 22,
+		"NetID": "",
+		"choices" : [0,0,0],
+		"peers": [],
+		"thesis" : -1
+	},
+	{
+		"id": 23,
+		"NetID": "",
+		"choices" : [0,0,0],
+		"peers": [],
+		"thesis" : -1
+	},
+	{
+		"id": 24,
+		"NetID": "",
+		"choices" : [0,0,0],
+		"peers": [],
+		"thesis" : -1
+	},
+	{
+		"id": 25,
+		"NetID": "",
+		"choices" : [0,0,0],
+		"peers": [],
+		"thesis" : -1
+	},
+	{
+		"id": 26,
+		"NetID": "",
+		"choices" : [0,0,0],
+		"peers": [],
+		"thesis" : -1
+	},
+	{
+		"id": 27,
+		"NetID": "",
+		"choices" : [0,0,0],
+		"peers": [],
+		"thesis" : -1
+	},
+	{
+		"id": 28,
+		"NetID": "",
+		"choices" : [0,0,0],
+		"peers": [],
+		"thesis" : -1
+	},
+	{
+		"id": 29,
+		"NetID": "",
+		"choices" : [0,0,0],
+		"peers": [],
+		"thesis" : -1
+	},
+	{
+		"id": 30,
+		"NetID": "",
+		"choices" : [0,0,0],
+		"peers": [],
+		"thesis" : -1
+	},
+	{
+		"id": 31,
+		"NetID": "",
+		"choices" : [0,0,0],
+		"peers": [],
+		"thesis" : -1
+	},
+	{
+		"id": 32,
+		"NetID": "",
+		"choices" : [0,0,0],
+		"peers": [],
+		"thesis" : -1
+	},
+	{
+		"id": 33,
+		"NetID": "",
+		"choices" : [0,0,0],
+		"peers": [],
+		"thesis" : -1
+	},
+	{
+		"id": 34,
+		"NetID": "",
+		"choices" : [0,0,0],
+		"peers": [],
+		"thesis" : -1
+	},
+	{
+		"id": 35,
+		"NetID": "",
+		"choices" : [0,0,0],
+		"peers": [],
+		"thesis" : -1
+	},
+	{
+		"id": 36,
+		"NetID": "",
+		"choices" : [0,0,0],
+		"peers": [],
+		"thesis" : -1
+	},
+	{
+		"id": 37,
+		"NetID": "",
+		"choices" : [0,0,0],
+		"peers": [],
+		"thesis" : -1
+	},
+	{
+		"id": 38,
+		"NetID": "",
+		"choices" : [0,0,0],
+		"peers": [],
+		"thesis" : -1
+	},
+	{
+		"id": 39,
+		"NetID": "",
+		"choices" : [0,0,0],
+		"peers": [],
+		"thesis" : -1
+	},
+	{
+		"id": 40,
+		"NetID": "",
+		"choices" : [0,0,0],
+		"peers": [],
+		"thesis" : -1
+	},
+	{
+		"id": 41,
+		"NetID": "",
+		"choices" : [0,0,0],
+		"peers": [],
+		"thesis" : -1
+	},
+	{
+		"id": 42,
+		"NetID": "",
+		"choices" : [0,0,0],
+		"peers": [],
+		"thesis" : -1
+	},
+	{
+		"id": 43,
+		"NetID": "",
+		"choices" : [0,0,0],
+		"peers": [],
+		"thesis" : -1
+	},
+	{
+		"id": 44,
+		"NetID": "",
+		"choices" : [0,0,0],
+		"peers": [],
+		"thesis" : -1
+	},
+	{
+		"id": 45,
+		"NetID": "",
+		"choices" : [0,0,0],
+		"peers": [],
+		"thesis" : -1
+	},
+	{
+		"id": 46,
+		"NetID": "",
+		"choices" : [0,0,0],
+		"peers": [],
+		"thesis" : -1
+	},
+	{
+		"id": 47,
+		"NetID": "",
+		"choices" : [0,0,0],
+		"peers": [],
+		"thesis" : -1
+	},
+	{
+		"id": 48,
+		"NetID": "",
+		"choices" : [0,0,0],
+		"peers": [],
+		"thesis" : -1
+	},
+	{
+		"id": 49,
+		"NetID": "",
+		"choices" : [0,0,0],
+		"peers": [],
+		"thesis" : -1
+	},
+	{
+		"id": 50,
+		"NetID": "",
+		"choices" : [0,0,0],
+		"peers": [],
+		"thesis" : -1
+	},
+	{
+		"id": 51,
+		"NetID": "",
+		"choices" : [0,0,0],
+		"peers": [],
+		"thesis" : -1
+	},
+	{
+		"id": 52,
+		"NetID": "",
+		"choices" : [0,0,0],
+		"peers": [],
+		"thesis" : -1
+	},
+	{
+		"id": 53,
+		"NetID": "",
+		"choices" : [0,0,0],
+		"peers": [],
+		"thesis" : -1
+	},
+	{
+		"id": 54,
+		"NetID": "",
+		"choices" : [0,0,0],
+		"peers": [],
+		"thesis" : -1
+	},
+	{
+		"id": 55,
+		"NetID": "",
+		"choices" : [0,0,0],
+		"peers": [],
+		"thesis" : -1
+	},
+	{
+		"id": 56,
+		"NetID": "",
+		"choices" : [0,0,0],
+		"peers": [],
+		"thesis" : -1
+	},
+	{
+		"id": 57,
+		"NetID": "",
+		"choices" : [0,0,0],
+		"peers": [],
+		"thesis" : -1
+	},
+	{
+		"id": 58,
+		"NetID": "",
+		"choices" : [0,0,0],
+		"peers": [],
+		"thesis" : -1
+	},
+	{
+		"id": 59,
+		"NetID": "",
+		"choices" : [0,0,0],
+		"peers": [],
+		"thesis" : -1
+	},
+	{
+		"id": 60,
+		"NetID": "",
+		"choices" : [0,0,0],
+		"peers": [],
+		"thesis" : -1
+	},
+	{
+		"id": 61,
+		"NetID": "",
+		"choices" : [0,0,0],
+		"peers": [],
+		"thesis" : -1
+	},
+	{
+		"id": 62,
+		"NetID": "",
+		"choices" : [0,0,0],
+		"peers": [],
+		"thesis" : -1
+	},
+	{
+		"id": 63,
+		"NetID": "",
+		"choices" : [0,0,0],
+		"peers": [],
+		"thesis" : -1
+	},
+	{
+		"id": 64,
+		"NetID": "",
+		"choices" : [0,0,0],
+		"peers": [],
+		"thesis" : -1
+	},
+	{
+		"id": 65,
+		"NetID": "",
+		"choices" : [0,0,0],
+		"peers": [],
+		"thesis" : -1
+	},
+	{
+		"id": 66,
+		"NetID": "",
+		"choices" : [0,0,0],
+		"peers": [],
+		"thesis" : -1
+	},
+	{
+		"id": 67,
+		"NetID": "",
+		"choices" : [0,0,0],
+		"peers": [],
+		"thesis" : -1
+	},
+	{
+		"id": 68,
+		"NetID": "",
+		"choices" : [0,0,0],
+		"peers": [],
+		"thesis" : -1
+	},
+	{
+		"id": 69,
+		"NetID": "",
+		"choices" : [0,0,0],
+		"peers": [],
+		"thesis" : -1
+	},
+	{
+		"id": 70,
+		"NetID": "",
+		"choices" : [0,0,0],
+		"peers": [],
+		"thesis" : -1
+	},
+	{
+		"id": 71,
+		"NetID": "",
+		"choices" : [0,0,0],
+		"peers": [],
+		"thesis" : -1
+	},
+	{
+		"id": 72,
+		"NetID": "",
+		"choices" : [0,0,0],
+		"peers": [],
+		"thesis" : -1
+	},
+	{
+		"id": 73,
+		"NetID": "",
+		"choices" : [0,0,0],
+		"peers": [],
+		"thesis" : -1
+	},
+	{
+		"id": 74,
+		"NetID": "",
+		"choices" : [0,0,0],
+		"peers": [],
+		"thesis" : -1
+	},
+	{
+		"id": 75,
+		"NetID": "",
+		"choices" : [0,0,0],
+		"peers": [],
+		"thesis" : -1
+	},
+	{
+		"id": 76,
+		"NetID": "",
+		"choices" : [0,0,0],
+		"peers": [],
+		"thesis" : -1
+	},
+	{
+		"id": 77,
+		"NetID": "",
+		"choices" : [0,0,0],
+		"peers": [],
+		"thesis" : -1
+	},
+	{
+		"id": 78,
+		"NetID": "",
+		"choices" : [0,0,0],
+		"peers": [],
+		"thesis" : -1
+	},
+	{
+		"id": 79,
+		"NetID": "",
+		"choices" : [0,0,0],
+		"peers": [],
+		"thesis" : -1
+	},
+];
+
 
 var characters = [
 	'Larry Stooge',
@@ -112,11 +676,13 @@ jQuery(document).ready(function($){
 	var unshuffled_students = generateStudents(80);
 	var shuffled_ids = uniqueRandom(unshuffled_students.length, unshuffled_students.length);
 	var students = [];
+	var choosers;
+	var teacher_chosen;
 	for(var i=0;i<unshuffled_students.length;i++){
 		students[i] = unshuffled_students[shuffled_ids[i]];
 	}
-	console.log(students);
-	console.log(unshuffled_students);
+	// console.log(students);
+	// console.log(unshuffled_students);
 	// This is the algorithm
 	sausage_factory();
 	// Get dataviz data
@@ -141,8 +707,8 @@ jQuery(document).ready(function($){
 
 	for(var i=0;i<students.length;i++){
 		var fr = '';
-		for(var j=0;j<students[i].friends.length;j++){
-			fr += characters[students[i].friends[j]];
+		for(var j=0;j<students[i].peers.length;j++){
+			fr += characters[students[i].peers[j]];
 			fr += ', ';
 		}
 		fr = fr.substr(0, fr.length-2);
@@ -176,7 +742,7 @@ jQuery(document).ready(function($){
 			students[i] = {
 				"id": i,
 				"choices" : t,
-				"friends": f,
+				"peers": f,
 				"thesis" : -1
 			};
 			students_left.push(students[i].id);	
@@ -272,7 +838,7 @@ jQuery(document).ready(function($){
 	// Pre-Iteration
 		// For each section...
 		for(var i=0;i<theses.length;i++){
-			// See how many people picked it as their first choice
+			// See how many people picked it as their first choice. i=thesis section, 0=1st choice
 			var choosers = getChoice(i, 0);
 			// If the number of 1st choice students is less than the total allowable students for that section...
 			if(choosers.length<=theses[i].total){
@@ -282,6 +848,7 @@ jQuery(document).ready(function($){
 				}
 			}
 		}
+
 		
 	// The remaining sections are contested
 
@@ -289,60 +856,101 @@ jQuery(document).ready(function($){
 		for(var n=0;n<3;n++){
 			// For each section...
 			for(var i=0;i<theses.length;i++){
-				// Find out which students selected that section as this iteration's choice (1st, 2nd, or 3rd)
-				var choosers = getChoice(i, n);
-				for(var j=0;j<theses[i].teacher_pref.length;j++){
-					for(var k=0;k<choosers.length;k++){
-						// If the teacher selected any of those students... 
-						if(choosers[k] == theses[i].teacher_pref[j]){
-							// Add them to that section
-							addStudent(students[choosers[k]], i);
-						}
-					}
+				// Find out which students selected that section as this iteration's choice (1st, 2nd, or 3rd). i=thesis section, n=choice, 1-3
+				choosers = getChoice(i, n);
+				teacher_chosen = 0;
+				teacherChoice(i, choosers);
+				if(teacher_chosen>0){
+					friendIn(n, i);
+					friendOut(n, i);
 				}
-				
-				// For all the students...
-				for(var j=0;j<students.length;j++){
-					// If they are now enrolled in this section...
-					if(students[j].thesis == i){
-						for(var k=0;k<students[j].friends.length;k++){
-							// If any of their friends selected this section as this iteration's choice (1st, 2nd, 3rd) and there's still room...
-							if(students[students[j].friends[k]].choices[n] == i && theses[i].enrolled.length<theses[i].total){
-								// The friend is enrolled in the section
-								addStudent(students[students[j].friends[k]], i);
-							}
-						}
-					}
-				}
-				
-				// For all the students...
-				for(var j=0;j<students.length;j++){
-					// If they are not enrolled in this section and want to be...
-					if(students[j].choices[n] == i && students[j].thesis == -1){
-						for(var k=0;k<students[j].friends.length;k++){
-							// If any of their friends are already enrolled in the section and there's still room...
-							if(students[students[j].friends[k]].thesis == i && theses[i].enrolled.length<theses[i].total){
-								// That student is enrolled in the section
-								addStudent(students[j],i);
-							}
-						}
-					}
-				}
-				// For all the students...
-				for(var j=0;j<students.length;j++){
-					// If they are not enrolled in this section and want to be...
-					if(students[j].choices[n] == i && students[j].thesis == -1){
-						// If there's still room...
-						if(theses[i].enrolled.length<theses[i].total){
-							// That student is enrolled in the section
-							addStudent(students[j],i);
-						}
-					}
-				}
+				oneAttaTime(n, i);
+				spaceLeft(n, i);
 			}
 			// Repeat for 2nd & 3rd choices...
 		}
-	// If there are any students left...
+		anyLeft();	
+	}
+	
+	function oneAttaTime(n, i){
+		// For all the students...
+		for(var j=0;j<students.length;j++){
+			// If they are not enrolled in this section and want to be...
+			if(students[j].choices[n] == i && students[j].thesis == -1){
+				// If there's still room...
+				if(theses[i].enrolled.length<theses[i].total){
+					// That student is enrolled in the section
+					addStudent(students[j],i);
+					friendIn();
+					friendOut();
+				}
+			}
+		}
+	}
+	
+	
+	function teacherChoice(i, choosers){
+		for(var j=0;j<theses[i].teacher_pref.length;j++){
+			for(var k=0;k<choosers.length;k++){
+				// If the teacher selected any of those students... 
+				if(choosers[k] == theses[i].teacher_pref[j]){
+					// Add them to that section
+					addStudent(students[choosers[k]], i);
+					teacher_chosen++;
+				}
+			}
+		}
+	}
+	
+	
+	
+	function friendIn(n, i){
+		// For all the students...
+		for(var j=0;j<students.length;j++){
+			// If they are now enrolled in this section...
+			if(students[j].thesis == i){
+				for(var k=0;k<students[j].peers.length;k++){
+					// If any of their peers selected this section as this iteration's choice (1st, 2nd, 3rd) and there's still room...
+					if(students[students[j].peers[k]].choices[n] == i && theses[i].enrolled.length<theses[i].total){
+						// The peer is enrolled in the section
+						addStudent(students[students[j].peers[k]], i);
+					}
+				}
+			}
+		}
+	}
+	
+	function friendOut(n, i){
+		// For all the students...
+		for(var j=0;j<students.length;j++){
+			// If they are not enrolled in this section and want to be...
+			if(students[j].choices[n] == i && students[j].thesis == -1){
+				for(var k=0;k<students[j].peers.length;k++){
+					// If any of their peers are already enrolled in the section and there's still room...
+					if(students[students[j].peers[k]].thesis == i && theses[i].enrolled.length<theses[i].total){
+						// That student is enrolled in the section
+						addStudent(students[j],i);
+					}
+				}
+			}
+		}
+	}
+	
+	function spaceLeft(n, i){
+		// For all the students...
+		for(var j=0;j<students.length;j++){
+			// If they are not enrolled in this section and want to be...
+			if(students[j].choices[n] == i && students[j].thesis == -1){
+				// If there's still room...
+				if(theses[i].enrolled.length<theses[i].total){
+					// That student is enrolled in the section
+					addStudent(students[j],i);
+				}
+			}
+		}
+	}
+	
+	function anyLeft(){
 		// For each section...
 		for(var j=0;j<students.length;j++){
 			if(students[j].thesis == -1){
@@ -354,8 +962,9 @@ jQuery(document).ready(function($){
 					}
 				}
 			}
-		}			
+		}
 	}
+	
 	
 	function getChoice(section, choice){
 		var choosers = [];
@@ -396,17 +1005,17 @@ jQuery(document).ready(function($){
 			} else {
 				got_none++;
 			}
-			var friends = students[i].friends;
+			var peers = students[i].peers;
 			var flag = false;
-			for(var j=0;j<friends.length;j++){
-				var friend_id = friends[j];
-				var friend = students[friend_id];
-				if(friend.thesis == students[i].thesis){
+			for(var j=0;j<peers.length;j++){
+				var peer_id = peers[j];
+				var peer = students[peer_id];
+				if(peer.thesis == students[i].thesis){
 					flag = true;
 				}
 			}
 			if(flag){
-				got_friends++;
+				got_peers++;
 			}
 		}
 
@@ -418,12 +1027,12 @@ jQuery(document).ready(function($){
 			"got_third" : got_third,
 			"got_none" : got_none,
 			"got_one" : got_one,
-			"got_friends" : got_friends
+			"got_peers" : got_peers
 		}
 
 		
 
-		$('.dataviz tbody').append('<tr><td>'+dataviz.got_first+' -> '+ (dataviz.got_first/students.length)*100 +'%</td><td>'+dataviz.got_second+' -> '+ (dataviz.got_second/students.length)*100+'%</td><td>'+dataviz.got_third+' -> '+ (dataviz.got_third/students.length)*100+'%</td><td>'+dataviz.got_one+' -> '+ (dataviz.got_one/students.length)*100+'%</td><td>'+dataviz.got_none+' -> '+ (dataviz.got_none/students.length)*100+'%</td><td>'+dataviz.got_friends+' -> '+ (dataviz.got_friends/students.length)*100 +'%</td></tr>');
+		$('.dataviz tbody').append('<tr><td>'+dataviz.got_first+' -> '+ (dataviz.got_first/students.length)*100 +'%</td><td>'+dataviz.got_second+' -> '+ (dataviz.got_second/students.length)*100+'%</td><td>'+dataviz.got_third+' -> '+ (dataviz.got_third/students.length)*100+'%</td><td>'+dataviz.got_one+' -> '+ (dataviz.got_one/students.length)*100+'%</td><td>'+dataviz.got_none+' -> '+ (dataviz.got_none/students.length)*100+'%</td><td>'+dataviz.got_peers+' -> '+ (dataviz.got_peers/students.length)*100 +'%</td></tr>');
 
 
 	}
@@ -496,12 +1105,12 @@ function drawChart(){
     data.addColumn('string', 'Choice');
     data.addColumn('number', 'Students');
     data.addRows([
-      ['In a section with a friend', got_friends],
-      ['In a section with no friends', (80-got_friends)]
+      ['In a section with a peer', got_peers],
+      ['In a section with no peers', (80-got_peers)]
     ]);
 
     // Set chart options
-    var options = {'title':'Students by Friends',
+    var options = {'title':'Students by peers',
                    'width':400,
                    'height':300};
 
