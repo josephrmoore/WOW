@@ -6,7 +6,9 @@ var got_one = 0;
 var got_peers = 0;
 
 jQuery(document).ready(function($){
-
+	
+	var iteration = 0;
+	
 	var burroughs = [
 		'Marko Tandefelt',
 		'Katherine Moriwaki',
@@ -672,35 +674,16 @@ jQuery(document).ready(function($){
 	var students_left = [];
 	var theses = generateTheses(6);
 	var unshuffled_students = generateStudents(student_data);
+
 	var shuffled_ids = uniqueRandom(unshuffled_students.length, unshuffled_students.length);
 	var students = [];
-	var choosers;
 	var teacher_chosen;
 	for(var i=0;i<unshuffled_students.length;i++){
+		// students[i] = unshuffled_students[i];
 		students[i] = unshuffled_students[shuffled_ids[i]];
 	}
 	// This is the algorithm
 	sausage_factory();
-	// Get dataviz data
-	var dataviz = dataviz();
-	
-	// Print to screen
-	for(var i=0;i<theses.length;i++){
-		var pr = '';
-		var en = '';
-		for(var j=0;j<theses[i].teacher_pref.length;j++){
-			pr += characters[theses[i].teacher_pref[j]];
-			pr += ', ';
-		}
-		for(var j=0;j<theses[i].enrolled.length;j++){
-			en += characters[theses[i].enrolled[j]];
-			en += ', ';
-		}
-		pr = pr.substr(0, pr.length-2);
-		en = en.substr(0, en.length-2);
-		$('.theses tbody').append('<tr><td>'+burroughs[i]+'</td><td>'+theses[i].choices[0]+'</td><td>'+theses[i].choices[1]+'</td><td>'+theses[i].choices[2]+'</td><td>'+theses[i].chosen+'</td><td>'+theses[i].not_chosen+'</td><td>'+pr+'</td><td>'+en+'</td></tr>');
-	}
-
 	for(var i=0;i<students.length;i++){
 		var fr = '';
 		for(var j=0;j<students[i].peers.length;j++){
@@ -708,19 +691,21 @@ jQuery(document).ready(function($){
 			fr += ', ';
 		}
 		fr = fr.substr(0, fr.length-2);
-		// $('.students tbody').append('<tr><td>'+ characters[students[i].id] +'</td><td class="t">'+ burroughs[students[i].choices[0]] +'</td><td class="t">'+ burroughs[students[i].choices[1]] +'</td><td class="t">'+ burroughs[students[i].choices[2]] +'</td><td>'+ fr +'</td><td class="t">'+burroughs[students[i].thesis]+'</td></tr>');
+		$('.students tbody').append('<tr><td>'+ characters[students[i].id] +'</td><td class="t">'+ burroughs[students[i].choices[0]] +'</td><td class="t">'+ burroughs[students[i].choices[1]] +'</td><td class="t">'+ burroughs[students[i].choices[2]] +'</td><td>'+ fr +'</td><td class="t">'+burroughs[students[i].thesis]+'</td></tr>');
 	}
+	// Get dataviz data
+	var dataviz = dataviz();
 			
 	// Functions
 	function generateTheses(total){
 		var sections = [];
 		var prefs = [
-				[27,11,8,21,33],
-				[30,15,22,25,5],
-				[17,16,9,24,48],
-				[21,25,41,9,22],
-				[16,1,15,36,12],
-				[6,7,15,10,11]
+				[3,11,41,29,54],
+				[30,32,34,45,52],
+				[17,16,9,26,48],
+				[22,24,43,46,63],
+				[65,66,11,58,10],
+				[25,39,15,50,77]
 		];
 		for(var i=0;i<total;i++){
 			sections[i] =  {
@@ -757,15 +742,6 @@ jQuery(document).ready(function($){
 				}
 			}
 			theses[i].totalinterest = interest;
-			var nmb = uniqueRandom(5, theses[i].totalinterest.length);
-			// var nmb2 = "";
-			// for(var j=0;j<nmb.length;j++){
-			// 	nmb2 += (nmb[j] + ",");
-			// }
-			// console.log(nmb2);
-			for(var j=0;j<nmb.length;j++){
-				theses[i].teacher_pref.push(theses[i].totalinterest[nmb[j]]);
-			}
 		}
 		return students;
 	}
@@ -804,7 +780,8 @@ jQuery(document).ready(function($){
 	}
 	
 	function sausage_factory(){
-				
+		
+		iteration++;		
 		// Initialize student interest data
 		for(var i=0;i<theses.length;i++){
 			var first = 0;
@@ -836,7 +813,6 @@ jQuery(document).ready(function($){
 			theses[i].choices[2] = third;
 			theses[i].not_chosen = not_chosen;
 			theses[i].chosen = first+second+third;
-			
 		}
 		
 	// Pre-Iteration
@@ -855,13 +831,12 @@ jQuery(document).ready(function($){
 
 		
 	// The remaining sections are contested
-
 	// Iterations (x3) 1st, 2nd, & 3rd choices for thesis
-		for(var n=0;n<3;n++){
+		for(var n=0;n<3;n++){			
 			// For each section...
-			for(var i=0;i<theses.length;i++){
+			for(var i=0;i<theses.length;i++){				
 				// Find out which students selected that section as this iteration's choice (1st, 2nd, or 3rd). i=thesis section, n=choice, 1-3
-				choosers = getChoice(i, n);
+				var choosers = getChoice(i, n);
 				teacher_chosen = 0;
 				teacherChoice(i, choosers);
 				if(teacher_chosen>0){
@@ -873,8 +848,36 @@ jQuery(document).ready(function($){
 			}
 			// Repeat for 2nd & 3rd choices...
 		}
-		anyLeft();	
+		anyLeft();
+		printResults();
 	}
+	
+	function printResults(){
+		var c = $('li.blank').clone();
+		c.removeClass('blank');
+		c.removeClass('off');
+		c.addClass('i-'+iteration);
+		// c.find('h1').html('Iteration '+iteration);
+		$('li.blank').before(c);
+		
+		// Print to screen
+		for(var i=0;i<theses.length;i++){
+			var pr = '';
+			var en = '';
+			for(var j=0;j<theses[i].teacher_pref.length;j++){
+				pr += characters[theses[i].teacher_pref[j]];
+				pr += ', ';
+			}
+			for(var j=0;j<theses[i].enrolled.length;j++){
+				en += characters[theses[i].enrolled[j]];
+				en += ', ';
+			}
+			pr = pr.substr(0, pr.length-2);
+			en = en.substr(0, en.length-2);
+			$('.i-' + iteration + ' .theses tbody').append('<tr><td>'+burroughs[i]+'</td><td>'+theses[i].choices[0]+'</td><td>'+theses[i].choices[1]+'</td><td>'+theses[i].choices[2]+'</td><td>'+theses[i].chosen+'</td><td>'+theses[i].not_chosen+'</td><td>'+pr+'</td><td>'+en+'</td></tr>');
+		}
+	}
+	
 	
 	function oneAttaTime(n, i){
 		// For all the students...
@@ -1042,26 +1045,31 @@ jQuery(document).ready(function($){
 	}
 	
 	$('#run_me_again').click(function(){
+		got_first = 0;
+		got_second = 0;
+		got_third = 0;
+		got_none = 0;
+		got_one = 0;
+		got_peers = 0;
+		students_left = [];
+		theses = generateTheses(6);
+		unshuffled_students = generateStudents(student_data);
+		shuffled_ids = uniqueRandom(unshuffled_students.length, unshuffled_students.length);
+		students = [];
+		for(var i=0;i<unshuffled_students.length;i++){
+			students[i] = unshuffled_students[shuffled_ids[i]];
+		}
 		// This is the algorithm
 		sausage_factory();
-		// Get dataviz data
-		// var dataviz = dataviz();
-		console.log(students[0]);
-		// Print to screen
-		for(var i=0;i<theses.length;i++){
-			var pr = '';
-			var en = '';
-			for(var j=0;j<theses[i].teacher_pref.length;j++){
-				pr += characters[theses[i].teacher_pref[j]];
-				pr += ', ';
-			}
-			for(var j=0;j<theses[i].enrolled.length;j++){
-				en += characters[theses[i].enrolled[j]];
-				en += ', ';
-			}
-			pr = pr.substr(0, pr.length-2);
-			en = en.substr(0, en.length-2);
-			$('table.theses tbody').append('<tr><td>'+burroughs[i]+'</td><td>'+theses[i].choices[0]+'</td><td>'+theses[i].choices[1]+'</td><td>'+theses[i].choices[2]+'</td><td>'+theses[i].chosen+'</td><td>'+theses[i].not_chosen+'</td><td>'+pr+'</td><td>'+en+'</td></tr>');
+	});
+	
+	$('#show_hide_students').click(function(){
+		if($('table.students').hasClass('off')){
+			$('table.students').removeClass('off');
+			$('#show_hide_students').html('-');
+		} else {
+			$('table.students').addClass('off');
+			$('#show_hide_students').html('+');
 		}
 	});
 	

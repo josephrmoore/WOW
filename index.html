@@ -60,13 +60,34 @@ td:last-child {
 	background:#eee;
 }
 
+.show-hide {
+	background:#ccc;
+	color:#000;
+	font-size:18px;
+	border:1px solid #000;
+	float:left;
+	margin-right:20px;
+	cursor:pointer;
+	width:28px;
+}
+
+ul, ol, dl {
+	list-style:none;
+}
+
+.off {
+	display:none !important;
+}
+
 </style>
 <div id="wrapper">
 	<h1>Thesis 1 - 2013</h1>
-	<button id="run_me_again">Run me again!</button>
+	<button class="off" id="run_me_again">Run me again!</button>
 	
-	<div class="students">
-		<table class="students">
+	<div class="all-students">
+		<button class="show-hide" id="show_hide_students">+</button>
+		<h1>Students</h1>
+		<table class="students off">
 			<thead>
 			<tr class="header">
 				<th>Student</th>
@@ -85,8 +106,8 @@ td:last-child {
 	
 	<div class="results">
 		<ul>
-			<li class="first">
-				<h1>1.</h1>
+			<li class="blank off">
+				<h1>Results</h1>
 				<table class="theses">
 					<thead>
 					<tr>
@@ -145,6 +166,5 @@ td:last-child {
     g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
     s.parentNode.insertBefore(g,s)}(document,'script'));
   </script>
-	<script>
 </body>
 </html>
