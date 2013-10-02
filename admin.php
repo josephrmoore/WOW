@@ -64,57 +64,6 @@
 		<h2>Run <input id="times" type="number" value="100" /> Times</h2>
 		<input type="submit" value="Run the Algorithm" />
 	</form>
-	<h1>***** Refresh to see a new randomly generated data set *****</h1>
-	<table class="students">
-		<thead>
-		<tr class="header">
-			<th>Student</th>
-			<th>First Choice</th>
-			<th>Second Choice</th>
-			<th>Third Choice</th>
-			<th>Friends</th>
-			<th>Thesis Selection</th>
-		</tr>
-		</thead>
-		<tbody>
-		</tbody>
-	</table>
-	
-	<table class="theses">
-		<thead>
-		<tr>
-			<th>Teacher</th>
-			<th># Students' 1st Choice</th>
-			<th># Students' 2nd Choice</th>
-			<th># Students' 3rd Choice</th>
-			<th># Students Chose This For Something</th>
-			<th># Students Did Not Choose This For Something</th>
-			<th>Preferred Students</th>
-			<th>Enrolled Students</th>
-		</tr>
-		</thead>
-		<tbody>
-		</tbody>
-	</table>
-	
-	
-	<table class="dataviz">
-		<thead>
-		<tr>
-			<th>Number &amp; % of Students that got 1st Choice</th>
-			<th>Number &amp; % of Students that got 2nd Choice</th>
-			<th>Number &amp; % of Students that got 3rd Choice</th>
-			<th>Number &amp; % of Students that got One of Their Choices</th>
-			<th>Number &amp; % of Students that got none of their choices</th>
-			<th>Number &amp; % of Students that got at least one of their friends in their section</th>
-		</tr>
-		</thead>
-		<tbody>
-		</tbody>
-	</table>
-	<div class="chart" id="chart_div1"></div>
-	<div class="chart" id="chart_div2"></div>
-	<div class="chart" id="chart_div3"></div>
 </div>
 
 

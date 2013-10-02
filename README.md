@@ -5,8 +5,10 @@ Writing on the Wall - Algorithm
 
 This is the process by which students will be placed in thesis sections. In the sample data I am generating, I am using a student set of 80 and a thesis section set of 6, as this reflects MFADT's actual composition.
 
-Steps for Placement
-===================
+We have developed a system where every student rates their top 3 choices for Thesis 1 next semester (Fall 2013) and picks the students s/he wants to be in the class with. Once you’ve done that, an algorithm will place students in their highest possible choice; teachers will also have some influence on who’s in their class. After the algorithm generates the initial results, (a) there will be a short period during which people can swap sections, and (b) there will be the normal add/drop process at the beginning of the semester.
+
+Steps for Placement (M&Ms not included)
+=======================================
 
 1. For each thesis section, if the number of first choices is less than or equal to the number of spots, accept those students.
 2. If a thesis section has more interest than spots, the teacher's preferences are collected between all "interested students". Those who indicated that thesis as either a 1st, 2nd, or 3rd choice.
