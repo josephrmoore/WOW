@@ -354,7 +354,23 @@ jQuery(document).ready(function($){
 					}
 				}
 			}
-		}			
+		}
+		
+		var postdata = {
+			'results': [
+				theses, students, unshuffled_students
+			]
+		};
+		$.ajax({
+			url: "savelog.php",
+			type:"POST",
+			data: postdata,
+			success: function(result){
+				console.log(postdata);
+				console.log("success! " + result);
+				window.close();
+			}
+		});			
 	}
 	
 	function getChoice(section, choice){
