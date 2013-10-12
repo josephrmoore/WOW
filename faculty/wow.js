@@ -700,7 +700,7 @@ jQuery(document).ready(function($){
 	function generateTheses(total){
 		var sections = [];
 		var prefs = [
-				[3,11,41,29,54],
+				[3,11,41,29,54, 44, 42, 34],
 				[30,32,34,45,52],
 				[17,16,9,26,48],
 				[22,24,43,46,63],
@@ -970,23 +970,6 @@ jQuery(document).ready(function($){
 				}
 			}
 		}
-		
-		var postdata = {
-			'results': [
-				theses, students, unshuffled_students
-			]
-		};
-		$.ajax({
-			url: "savelog.php",
-			type:"POST",
-			data: postdata,
-			success: function(result){
-				console.log(postdata);
-				console.log("success! " + result);
-				window.close();
-			}
-		});			
-
 	}
 	
 	
