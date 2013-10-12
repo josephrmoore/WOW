@@ -6,17 +6,22 @@ var got_one = 0;
 var got_peers = 0;
 
 jQuery(document).ready(function($){
+	var burroughs;
+	var data;
+	
+	$.ajax({
+	  dataType: "json",
+	  url: "teachers.json",
+	  data: data,
+	  success: function(){
+	  	for(name in data){
+		  	burroughs.push(data[name]);
+	  	}
+	  	console.log(burroughs);
+	  }
+	});
 	
 	var iteration = 0;
-	
-	var burroughs = [
-		'Marko Tandefelt',
-		'Katherine Moriwaki',
-		'Anthony Deen',
-		'Melanie Crean',
-		'Chris Romero',
-		'John Sharp'
-	];
 
 	var student_data = [
 		{
@@ -851,6 +856,13 @@ jQuery(document).ready(function($){
 		anyLeft();
 		printResults();
 	}
+	
+	
+	
+// ************************** FUNCTION DECLARATIONS ************************** //
+	
+	
+	
 	
 	function printResults(){
 		var c = $('li.blank').clone();

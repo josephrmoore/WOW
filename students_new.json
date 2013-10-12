@@ -1,0 +1,24 @@
+{
+    "students": {
+        "N0": {
+            "name": "Larry Stooge",
+            "choices": [
+                0,
+                1,
+                2
+            ],
+            "peers": [
+                "N1",
+                "N2",
+                "N63"
+            ],
+            "current": "Marko",
+            "thesis" : "",
+            "choice_recieved": 0, // 0-2 is 1st-3rd choices, -1 is no choice
+            "peers_inclass": [
+                "N63"
+            ],
+            "professor_preferred": false
+        }
+    }
+}
