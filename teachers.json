@@ -1,10 +1,10 @@
 {
-    "teachers": {
-        "thesis1": "Manhattan",
-        "thesis2": "Brooklyn",
-        "thesis3": "Queens",
-        "thesis4": "Bronx",
-        "thesis5": "StatenIsland",
-        "thesis6": "NewJersey"
-    }
+    "teachers": [
+		"Manhattan",
+		"Brooklyn",
+		"Queens",
+		"Bronx",
+		"StatenIsland",
+		"NewJersey"
+    ]
 }
