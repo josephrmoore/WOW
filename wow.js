@@ -900,8 +900,8 @@ jQuery(document).ready(function($){
 				if(theses[i].enrolled.length<theses[i].total){
 					// That student is enrolled in the section
 					addStudent(students[j],i);
-					friendIn();
-					friendOut();
+					friendIn(n, i);
+					friendOut(n, i);
 				}
 			}
 		}
