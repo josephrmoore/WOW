@@ -17,16 +17,16 @@ if($file){
         "<?=$array[$i][7]?>": {
             "name": "<?=$array[$i][6]?>",
             "choices": [
-                "<?=$array[$i][1]?>",
-                "<?=$array[$i][2]?>",
-                "<?=$array[$i][3]?>"
+                "<?=convertTeacher($array[$i][1])?>",
+                "<?=convertTeacher($array[$i][2])?>",
+                "<?=convertTeacher($array[$i][3])?>"
             ],
             "peers": "<?=$array[$i][4]?>",
             "current": "<?=$array[$i][5]?>",
             "thesis" : "-1",
             "choice_recieved": "-1",
             "peers_inclass": "",
-            "professor_preferred": false
+            "professor_preferred": ""
         }<?php if($i<count($array)-1){echo ",";} ?>
 <?php } ?>
     }
@@ -50,3 +50,36 @@ if($file){
 
 	<?php } ?>
 <?php } ?>
+
+
+<?php 
+
+function convertTeacher($in){
+	$out = -1;
+	switch($in){
+		case "Katherine Moriwaki":
+			$out = 0;
+			break;
+		case "John Sharp":
+			$out = 1;
+			break;
+		case "Coleen Macklin":
+			$out = 2;
+			break;
+		case "Melanie Crean":
+			$out = 3;
+			break;
+		case "Anthony Deen":
+			$out = 4;
+			break;
+		case "Marko Tandefelt":
+			$out = 5;
+			break;
+		default:
+			$out = -1;
+			break;
+	}
+	return $out;
+}
+
+?>

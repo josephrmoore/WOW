@@ -21,23 +21,10 @@
 
 <div id="wrapper">
 	<h1>Algorithm Control Panel</h1>
-	<div class="status">
-		<ol>
-			<li>
-				<ul>
-					<li class="incomplete">Student Data</li>
-					<li class="incomplete">Teacher Data</li>
-				</ul>
-			</li>
-			<li class="incomplete">
-				Run the Algorithm
-			</li>
-		</ol>
-	</div>
 	<section class="students">
+		<h2>Students</h2>
 		<button id="import-students">Import Student Data CSV</button>
 		<div class="off">
-			<h2>Students</h2>
 			<table>
 			<thead>
 				<th class="n-number">N-Number</th>
@@ -65,7 +52,7 @@
 			</tbody>
 			</table>
 		</div>
-		<button id="students-ok">All the Student Data is OK!</button>
+		<button id="students-ok" class="off">All the Student Data is OK!</button>
 	</section>
 	<section class="teachers">
 		<h2>Teachers</h2>
@@ -76,7 +63,7 @@
 				<p class="choices" contenteditable="true"></p>
 			</li>
 		</ul>
-		<button id="teachers-ok">All the Teacher Data is OK!</button>
+		<button id="teachers-ok" class="off">All the Teacher Data is OK!</button>
 	</section>
 	
 	<section class="run off">
@@ -142,11 +129,12 @@
 						clone.find('.choice-3').html(students[N].choices[2]);
 						clone.find('.peers').html(students[N].peers);
 						clone.find('.current-thesis').html(students[N].current);
+						clone.find('.professor-preferred').html(students[N].professor_preferred);
 						clone.removeClass('template off');
 						temp.before(clone);
 					}
 					$('.students div').removeClass('off');
-					
+					$('#students-ok').removeClass('off');
 					$('#students-ok').click(function(){
 						$('td').removeAttr('contenteditable').addClass('no-edit');
 						$('.students tr').each(function(i){
@@ -172,6 +160,20 @@
 							$('.run').removeClass('off');
 						}
 					});
+					if(teachers_done){
+						for(j=0;j<teachers.length;j++){
+							var choices = teachers[j].choices;
+							var arr = choices.split(" ");
+							$('.students tr').each(function(i){
+								for(k=0; k<arr.length; k++){
+									if($(this).find('.n-number').html() == arr[k]){
+										students[arr[k]].professor_preferred += teachers[j].name + " ";
+										$(this).find('.professor-preferred').html(teachers[j].name + " ");
+									}
+								}
+							});
+						}
+					}
 				}
 			});			
 		});
@@ -192,7 +194,7 @@
 						temp.before(clone);
 					}
 					
-					
+					$('#teachers-ok').removeClass('off');
 					$('#teachers-ok').click(function(){
 						$('.teachers span').removeAttr('contenteditable').addClass('no-edit');
 						$('.teachers p').removeAttr('contenteditable').addClass('no-edit');
@@ -210,6 +212,21 @@
 							prepAlgorithm();
 						}
 					});
+					
+					if(students_done){
+						for(j=0;j<teachers.length;j++){
+							var choices = teachers[j].choices;
+							var arr = choices.split(" ");
+							$('.students tr').each(function(i){
+								for(k=0; k<arr.length; k++){
+									if($(this).find('.n-number').html() == arr[k]){
+										students[arr[k]].professor_preferred += teachers[j].name + " ";
+										$(this).find('.professor-preferred').html(teachers[j].name + " ");
+									}
+								}
+							});
+						}
+					}
 				}
 			});			
 		});
@@ -242,12 +259,7 @@
 						}
 					});	
 				}
-			});	
-			
-	
-			
-			// write new vars to json files
-						
+			});						
 		}
 		
 		Object.size = function(obj) {
@@ -260,7 +272,15 @@
 		
 		// adapt old algorithm script to use json imported not hardcoded teacher and student vars
 		
-		// write page
+		// write page for picking results
+			// parse log
+			// weight results
+			// display filtered
+			// display single
+			// choosing mechanism
+			// export to csv
+		
+		
 
 	});
 </script>

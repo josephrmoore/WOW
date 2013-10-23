@@ -56,6 +56,10 @@ footer,header,hgroup,menu,nav,section,summary, video {
   display:block;
 }
 
+body {
+	font: 12px/1.2 "Helvetica" normal;
+}
+
 button {
 	margin: 20px;
 	display: block;
@@ -65,8 +69,18 @@ button {
 	padding: 3px 10px;
 }
 
+td, .teachers span, .teachers p {
+	cursor: pointer;
+}
+
 .no-edit {
 	background: #eee;
+	cursor:default!important;
+}
+
+h1 {
+	font-size: 36px;
+	margin-bottom: 20px;
 }
 
 /* Turning off elements */
