@@ -114,6 +114,7 @@
 		}
 		
 		$('#import-students').click(function(){
+			$(this).addClass('off');
 			$.ajax({
 				url: "convert.php?file=students.csv",
 				success: function(data){
@@ -124,9 +125,9 @@
 						var clone = temp.clone();
 						clone.find('.n-number').html(N);
 						clone.find('.name').html(students[N].name);
-						clone.find('.choice-1').html(students[N].choices[0]);
-						clone.find('.choice-2').html(students[N].choices[1]);
-						clone.find('.choice-3').html(students[N].choices[2]);
+						clone.find('.choice-1').html(revertTeacher(students[N].choices[0]));
+						clone.find('.choice-2').html(revertTeacher(students[N].choices[1]));
+						clone.find('.choice-3').html(revertTeacher(students[N].choices[2]));
 						clone.find('.peers').html(students[N].peers);
 						clone.find('.current-thesis').html(students[N].current);
 						clone.find('.professor-preferred').html(students[N].professor_preferred);
@@ -146,11 +147,10 @@
 								var c3 = $(this).find('.choice-3').html();
 								var peers = $(this).find('.peers').html();
 								var current = $(this).find('.current-thesis').html();
-								console.log(N);
 								students[N].name = name;
-								students[N].choices[0] = c1;
-								students[N].choices[1] = c2;
-								students[N].choices[2] = c3;
+								students[N].choices[0] = convertTeacher(c1);
+								students[N].choices[1] = convertTeacher(c2);
+								students[N].choices[2] = convertTeacher(c3);
 								students[N].peers = peers;
 								students[N].current = current;
 							}
@@ -179,6 +179,7 @@
 		});
 		
 		$('#import-teachers').click(function(){
+			$(this).addClass('off');
 			$.ajax({
 				url: "convert.php?file=teachers.csv",
 				success: function(data){
@@ -270,8 +271,62 @@
 		    return size;
 		};
 		
-		// adapt old algorithm script to use json imported not hardcoded teacher and student vars
+		function revertTeacher(_in){
+			out = "No Choice";
+			switch(parseInt(_in)){
+				case 0:
+					out = "Katherine Moriwaki";
+					break;
+				case 1:
+					out = "John Sharp";
+					break;
+				case 2:
+					out = "Colleen Macklin";
+					break;
+				case 3:
+					out = "Melanie Crean";
+					break;
+				case 4:
+					out = "Anthony Deen";
+					break;
+				case 5:
+					out = "Marko Tandefelt";
+					break;
+				default:
+					out = "No Choice";
+					break;
+			}
+			return out;
+		}
 		
+		function convertTeacher(_in){
+			var out = -1;
+			switch(_in){
+				case "Katherine Moriwaki":
+					out = 0;
+					break;
+				case "John Sharp":
+					out = 1;
+					break;
+				case "Coleen Macklin":
+					out = 2;
+					break;
+				case "Melanie Crean":
+					out = 3;
+					break;
+				case "Anthony Deen":
+					out = 4;
+					break;
+				case "Marko Tandefelt":
+					out = 5;
+					break;
+				default:
+					out = -1;
+					break;
+			}
+			return out;
+		}
+				
 		// write page for picking results
 			// parse log
 			// weight results

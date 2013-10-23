@@ -63,7 +63,7 @@ function convertTeacher($in){
 		case "John Sharp":
 			$out = 1;
 			break;
-		case "Coleen Macklin":
+		case "Colleen Macklin":
 			$out = 2;
 			break;
 		case "Melanie Crean":

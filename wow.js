@@ -29,7 +29,6 @@ jQuery(document).ready(function($){
 	  success: function(d){
 	  	var counter = 0;
 	  	for(N in d.students){
-	  		console.log(d.students[N].choices[1]);
 			var s = {
 				"id": counter,
 				"name": d.students[N].name,
@@ -39,7 +38,6 @@ jQuery(document).ready(function($){
 				"peers": [], // this will be a problem. need to convert from email to N#
 				"thesis" : -1
 			}
-			console.log(s);
 			counter++;
 			student_data.push(s);
 		}
@@ -114,12 +112,12 @@ jQuery(document).ready(function($){
 					  	}
 				  	}
 			  	}
+			  	console.log(prefs);
 		  	}
 			// Initialize global variables - generateThesis ***MUST*** always be before generateStudents
 			var unshuffled_students = generateStudents(student_data);		
 			var shuffled_ids = uniqueRandom(unshuffled_students.length, unshuffled_students.length);
 			var theses = generateTheses(6);
-			console.log(theses);
 			getThesisInterest();
 			for(var i=0;i<unshuffled_students.length;i++){
 				// students[i] = unshuffled_students[i];
