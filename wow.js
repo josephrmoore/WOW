@@ -191,7 +191,6 @@ jQuery(document).ready(function($){
 					friendOut(n, i);
 				}
 				oneAttaTime(n, i);
-				spaceLeft(n, i);
 			}
 			// Repeat for 2nd & 3rd choices...
 		}

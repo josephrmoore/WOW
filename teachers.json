@@ -1,10 +1,1 @@
-{
-    "teachers": [
-		"Manhattan",
-		"Brooklyn",
-		"Queens",
-		"Bronx",
-		"StatenIsland",
-		"NewJersey"
-    ]
-}
+{"teachers":[{"name":"John Sharp","choices":"moorj495"},{"name":"Katherine Moriwaki","choices":"asegs578 beckm072 bello543 bhagr892 blacv325"},{"name":"Marko Tandefelt","choices":"presj521 proaj734 marek439 nguyt330 moonp372"},{"name":"Colleen Macklin","choices":"moorj495"},{"name":"Melanie Creen","choices":"asegs578 beckm072 bello543 bhagr892 blacv325"},{"name":"Anthony Deen","choices":"presj521 proaj734 marek439 nguyt330 moonp372"}]}
