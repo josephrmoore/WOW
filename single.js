@@ -13,7 +13,7 @@ jQuery(document).ready(function($){
 		"Colleen Macklin",
 		"Melanie Creen",
 		"Anthony Deen",
-		"Marko Tendefelt"
+		"Marko Tandefelt"
 	];
 	var data;
 	var students_left = [];
@@ -48,31 +48,57 @@ jQuery(document).ready(function($){
 				"peers": arr, // this will be a problem. need to convert from email to N#
 				"thesis" : -1
 			}
+			for(i=0;i<theses.length;i++){
+				for(j=0;j<theses[i].enrolled.length;j++){
+					if(s.id == theses[i].enrolled[j]){
+						s.thesis = i;
+					}
+				}
+			}
 			counter++;
 			student_data.push(s);
 		}
-/*
-		var unshuffled_students = generateStudents(student_data);		
-		var shuffled_ids = uniqueRandom(unshuffled_students.length, unshuffled_students.length);
-		for(var i=0;i<unshuffled_students.length;i++){
-			// students[i] = unshuffled_students[i];
-			students[i] = unshuffled_students[shuffled_ids[i]];
-		}
-*/
-		
+		students = generateStudents(student_data);		
+		console.log(students);
 		for(var i=0;i<students.length;i++){
-		var fr = '';
-		for(var j=0;j<students[i].peers.length;j++){
-			fr += students[students[i].peers[j]].name;
-			fr += ', ';
+			var fr = '';
+			for(var j=0;j<students[i].peers.length;j++){
+				fr += students[students[i].peers[j]].name;
+				fr += ', ';
+			}
+			fr = fr.substr(0, fr.length-2);
+			$('.students tbody').append('<tr><td>'+ students[students[i].id].name +'</td><td class="t">'+ burroughs[students[i].choices[0]] +'</td><td class="t">'+ burroughs[students[i].choices[1]] +'</td><td class="t">'+ burroughs[students[i].choices[2]] +'</td><td>'+ fr +'</td><td class="t">'+burroughs[students[i].thesis]+'</td></tr>');
 		}
-		fr = fr.substr(0, fr.length-2);
-		$('.students tbody').append('<tr><td>'+ students[students[i].id].name +'</td><td class="t">'+ burroughs[students[i].choices[0]] +'</td><td class="t">'+ burroughs[students[i].choices[1]] +'</td><td class="t">'+ burroughs[students[i].choices[2]] +'</td><td>'+ fr +'</td><td class="t">'+burroughs[students[i].thesis]+'</td></tr>');
-	}
 	// Get dataviz data
 	var dataviz = dataviz();
 
   	ajaxed = true;
+  	
+  	$('#export-csv').click(function(){
+  	  	var post = {
+	  		"sections": [],
+	  		"id": set_id
+  		}
+  		for(i=0;i<theses.length;i++){
+  			var t = {};
+	  		t.teacher = burroughs[i];
+	  		t.students = [];
+	  		for(j=0;j<theses[i].enrolled.length;j++){
+		  		t.students.push(students[theses[i].enrolled[j]].NetID);
+	  		}
+	  		post.sections.push(t);
+  		}
+	  	$.ajax({
+		  	url: "exportresult.php",
+		  	data: post,
+		  	type: "POST",
+		  	success: function(data){
+			  	$('#export-csv').after(data);
+			  	$('#export-csv').remove();
+		  	}
+	  	});
+  	});
+  	
   	// Functions
 	function generateTheses(total){
 		var sections = [];
@@ -82,7 +108,6 @@ jQuery(document).ready(function($){
 			} else {
 				p = prefs[i];
 			}
-			console.log(burroughs[i]);
 			sections[i] =  {
 				"id": i,
 				"teacher" : burroughs[i],

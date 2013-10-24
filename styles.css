@@ -56,6 +56,64 @@ footer,header,hgroup,menu,nav,section,summary, video {
   display:block;
 }
 
+table {
+	text-align:right;
+	border-collapse:collapse;
+	border:1px solid #ccc;
+	margin:40px;
+}
+
+td, th {
+	border:1px solid #ccc;
+	padding:3px 5px;
+}
+
+th {
+	background:#fefcf4;
+}
+
+td em {
+	font-size:9px;
+}
+
+td:last-child {
+	border-right:none;
+}
+
+.chart {
+	display:inline;
+	float:left;
+}
+
+.t {
+	background:#eee;
+}
+
+.dataviz td {
+	background:#eee;
+}
+
+.show-hide {
+	background:#ccc;
+	color:#000;
+	font-size:18px;
+	border:1px solid #000;
+	float:left;
+	margin-right:20px;
+	cursor:pointer;
+	width:28px;
+}
+
+ul, ol, dl {
+	list-style:none;
+}
+
+.off {
+	display:none !important;
+}
+
+
+
 body {
 	font: 12px/1.2 "Helvetica" normal;
 }

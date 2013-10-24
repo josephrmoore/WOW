@@ -13,7 +13,7 @@ jQuery(document).ready(function($){
 		"Colleen Macklin",
 		"Melanie Creen",
 		"Anthony Deen",
-		"Marko Tendefelt"
+		"Marko Tandefelt"
 	];
 	var data;
 	var students_left = [];
@@ -138,12 +138,12 @@ jQuery(document).ready(function($){
 			sausage_factory();
 			for(var i=0;i<students.length;i++){
 				var fr = '';
-				for(var j=0;j<students[i].peers.length;j++){
-					fr += students[students[i].peers[j]].name;
+				for(var j=0;j<students[students[i].id].peers.length;j++){
+					fr += students[students[students[i].id].peers[j]].name;
 					fr += ', ';
 				}
 				fr = fr.substr(0, fr.length-2);
-				$('.students tbody').append('<tr><td>'+ students[students[i].id].name +'</td><td class="t">'+ burroughs[students[i].choices[0]] +'</td><td class="t">'+ burroughs[students[i].choices[1]] +'</td><td class="t">'+ burroughs[students[i].choices[2]] +'</td><td>'+ fr +'</td><td class="t">'+burroughs[students[i].thesis]+'</td></tr>');
+				$('.students tbody').append('<tr><td>'+ students[students[i].id].name +'</td><td class="t">'+ burroughs[students[students[i].id].choices[0]] +'</td><td class="t">'+ burroughs[students[students[i].id].choices[1]] +'</td><td class="t">'+ burroughs[students[students[i].id].choices[2]] +'</td><td>'+ fr +'</td><td class="t">'+burroughs[students[students[i].id].thesis]+'</td></tr>');
 			}
 			// Get dataviz data
 			var dataviz = dataviz();
@@ -562,99 +562,7 @@ jQuery(document).ready(function($){
 		});
 	  }
 	});
-	
-	var iteration = 0;
-
-
-
-	var characters = [
-		'Larry Stooge',
-		'Moe Stooge',
-		'Curly Stooge',
-		'Bugs Bunny',
-		'Elmer Fudd',
-		'Daffy Duck',
-		'Foghorn Leghorn',
-		'Sylvester',
-		'Tweety Bird',
-		'Marvin Martian',
-		'Wile E. Coyote',
-		'Road Runner',
-		'Speedy Gonzales',
-		'Pepe Le Pew',
-		'Petunia Pig',
-		'Yosemite Sam',
-		'Tasmanian Devil',
-		'Tasmanian She-Devil',
-		'Mickey Mouse',
-		'Pluto',
-		'Sluggo',
-		'Nancy',
-		'Charlie Brown',
-		'Linus',
-		'Lucy',
-		'Pigpen',
-		'Snoopy',
-		'Woodstock',
-		'Doctor Jekyll',
-		'Mister Hyde',
-		'Huey',
-		'Dewey',
-		'Louie',
-		'Pee-Wee Herman',
-		'Cowboy Curtis',
-		'Miss Yvonne',
-		'Globey',
-		'Randy',
-		'Pterri',
-		'Clockey',
-		'Floory',
-		'Dog Chair',
-		'Conky 2000',
-		'Jambi',
-		'Chairry',
-		'Mario',
-		'Luigi',
-		'Princess Peach',
-		'Toad',
-		'Bowser',
-		'Yoshi',
-		'Wario',
-		'Wa-Luigi',
-		'Donkey Kong',
-		'Diddy Kong',
-		'Dixie Kong',
-		'Cranky Kong',
-		'Candy Kong',
-		'Funky Kong',
-		'Maxwell Smart',
-		'Agent 99',
-		'Chief',
-		'Agent 13',
-		'Batman',
-		'Robin',
-		'Superman',
-		'Captain Marvel',
-		'Wonder Woman',
-		'Batgirl',
-		'Catwoman',
-		'Green Lantern',
-		'Flash',
-		'Daredevil',
-		'Invisible Woman',
-		'The Hulk',
-		'The Thing',
-		'Thor',
-		'Iron Man',
-		'Captain Kirk',
-		'Scotty',
-		'Bones',
-		'Spock',
-		'Jim',
-		'Uhura',
-		'Sulu'
-	];
-	
+	var iteration = 0;	
 });
 
 // Load the Visualization API and the piechart package.

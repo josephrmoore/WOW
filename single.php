@@ -151,6 +151,7 @@ ul, ol, dl {
 				<div class="chart" id="chart_div3"></div>
 			</li>
 		</ul>
+		<button id="export-csv">Export Results</button>
 	</div>
 
 	
@@ -169,8 +170,7 @@ ul, ol, dl {
 					var results = <?= json_encode($results);?>;
 					var students = results.students.students;
 					var theses = results.theses;
-					console.log(results);
-					console.log(students);
+					var set_id = results.id;
 				</script>
 				
 		<?php } ?>

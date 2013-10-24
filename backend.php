@@ -24,8 +24,7 @@
 	<section class="students">
 		<h2>Students</h2>
 		<button id="import-students">Import Student Data CSV</button>
-		<div class="off">
-			<table>
+		<table class="off">
 			<thead>
 				<th class="n-number">N-Number</th>
 				<th class="name">Name</th>
@@ -50,19 +49,24 @@
 					<td class="new-thesis" contenteditable="true"></td>
 				</tr>
 			</tbody>
-			</table>
-		</div>
+		</table>
 		<button id="students-ok" class="off">All the Student Data is OK!</button>
 	</section>
 	<section class="teachers">
 		<h2>Teachers</h2>
 		<button id="import-teachers">Import Teacher Data CSV</button>
-		<ul>
-			<li class="template off">
-				<span class="name" contenteditable="true"></span>
-				<p class="choices" contenteditable="true"></p>
-			</li>
-		</ul>
+		<table class="off">
+			<thead>
+				<th class="name">Name</th>
+				<th class="choices">Choices</th>
+			</thead>
+			<tbody>
+				<tr class="template off">
+					<td class="name" contenteditable="true"></td>
+					<td class="choices" contenteditable="true"></td>
+				</tr>
+			</tbody>
+			</table>
 		<button id="teachers-ok" class="off">All the Teacher Data is OK!</button>
 	</section>
 	
@@ -84,8 +88,8 @@
 				<span class="number"></span>
 			</div>
 		</div>
-		<p>When all the popup windows close, you can <button id="get-results">Click Here</button> to choose from the existing results sets.</p>
 	</section>
+	<section class="get-results off">When all the popup windows close, you can <button id="get-results">Click Here</button> to choose from the existing results sets.</section>
 	<section class="results dataviz off">
 		<table>
 					<thead>
@@ -198,7 +202,7 @@
 					showTop50(allresults);
 				}
 			});
-			
+			$('#get-results').addClass('off');
 			$('.results').removeClass('off');
 		});
 		
@@ -230,6 +234,8 @@
 			}
 			$('.select button').click(function(){
 				var id = $(this).parent().parent().attr('data-id');
+				allresults.allresults[id].id = id;
+
 				// cram allresults[weighted[i].id].results[1] object into tables from original page, or popup		
 				$.ajax({
 					type:"POST",
@@ -247,6 +253,7 @@
 	
 		
 		$('#import-students').click(function(){
+			$('.students table').removeClass('off');
 			$(this).addClass('off');
 			$.ajax({
 				url: "convert.php?file=students.csv",
@@ -270,6 +277,7 @@
 					$('.students div').removeClass('off');
 					$('#students-ok').removeClass('off');
 					$('#students-ok').click(function(){
+						$(this).addClass('off');
 						$('td').removeAttr('contenteditable').addClass('no-edit');
 						$('.students tr').each(function(i){
 							if(!$(this).hasClass('template') && $(this).find('.n-number').html() != 'N-Number'){
@@ -303,6 +311,7 @@
 		
 		$('#import-teachers').click(function(){
 			$(this).addClass('off');
+			$('.teachers table').removeClass('off');
 			$.ajax({
 				url: "convert.php?file=teachers.csv",
 				success: function(data){
@@ -319,6 +328,7 @@
 					
 					$('#teachers-ok').removeClass('off');
 					$('#teachers-ok').click(function(){
+						$(this).addClass('off');
 						$('.teachers span').removeAttr('contenteditable').addClass('no-edit');
 						$('.teachers p').removeAttr('contenteditable').addClass('no-edit');
 
@@ -383,6 +393,7 @@
 						success: function(result){
 							console.log("success! " + result);
 							$('.run').removeClass('off');
+							$('.get-results').removeClass('off');
 						}
 					});	
 				}
