@@ -68,7 +68,6 @@
 	
 	<section class="run off">
 		<form action="">
-			<h2>Run <input id="times" type="number" value="100" /> Times</h2>
 			<input type="submit" value="Run the Algorithm" />
 		</form>
 		<div class="attributes">
@@ -85,7 +84,26 @@
 				<span class="number"></span>
 			</div>
 		</div>
+		<p>When all the popup windows close, you can <button id="get-results">Click Here</button> to choose from the existing results sets.</p>
 	</section>
+	<section class="results dataviz off">
+		<table>
+					<thead>
+					<tr>
+						<th>Number &amp; % of Students that got 1st Choice</th>
+						<th>Number &amp; % of Students that got 2nd Choice</th>
+						<th>Number &amp; % of Students that got 3rd Choice</th>
+						<th>Number &amp; % of Students that got One of Their Choices</th>
+						<th>Number &amp; % of Students that got none of their choices</th>
+						<th>Number &amp; % of Students that got at least one of their friends in their section</th>
+						<th>Select</th>
+					</tr>
+					</thead>
+			<tbody>
+			</tbody>
+		</table>
+	</section>
+	<p id="debug"></p>
 </div>
 
 
@@ -100,11 +118,11 @@
 		var students, teachers;
 		var students_done = false;
 		var teachers_done = false;
+		var allresults = [];
 		$('form').submit(function(){
 			// send teacher and student data to overwrite JSON files
 			// run algorithm
-			var times = $('#times').val();
-			runAlgorithm(times);
+			runAlgorithm(25);
 			return false;
 		});
 		function runAlgorithm(times){
@@ -112,6 +130,121 @@
 				window.open("index.php", "_blank", "width=100,height=100");
 			}
 		}
+		
+		function dataviz(students, s){
+			var got_first = 0;
+			var got_second = 0;
+			var got_third = 0;
+			var got_none = 0;
+			var got_one = 0;
+			var got_peers = 0;
+			for(var i=0;i<students.length;i++){
+				if(students[i].choices[0] == students[i].thesis){
+					got_first++;
+				} else if (students[i].choices[1] == students[i].thesis){
+					got_second++;
+				} else if (students[i].choices[2] == students[i].thesis){
+					got_third++
+				} else {
+					got_none++;
+				}
+				
+				
+				var p = s[students[i].NetID].peers;
+				var peers = [];
+				var parr = p.split(" ");
+				for(j=0;j<parr.length;j++){
+					parr[j] = s[parr[j]].id;
+				}
+				var flag = false;
+				for(var j=0;j<peers.length;j++){
+					var peer_id = peers[j];
+					var peer = students[peer_id];
+					if(peer.thesis == students[i].thesis){
+						flag = true;
+					}
+				}
+				if(flag){
+					got_peers++;
+				}
+			}
+	
+			got_one = got_first+got_second+got_third;
+	
+			var dataviz = {
+				"got_first" : got_first,
+				"got_second" : got_second,
+				"got_third" : got_third,
+				"got_none" : got_none,
+				"got_one" : got_one,
+				"got_peers" : got_peers
+			}
+	
+			return dataviz;
+	
+		}
+		
+		function showResults(dataviz, students, i){
+			$('.results tbody').append('<tr data-id="' + i + '"><td>'+dataviz.got_first+' -> '+ (dataviz.got_first/students.length)*100 +'%</td><td>'+dataviz.got_second+' -> '+ (dataviz.got_second/students.length)*100+'%</td><td>'+dataviz.got_third+' -> '+ (dataviz.got_third/students.length)*100+'%</td><td>'+dataviz.got_one+' -> '+ (dataviz.got_one/students.length)*100+'%</td><td>'+dataviz.got_none+' -> '+ (dataviz.got_none/students.length)*100+'%</td><td>'+dataviz.got_peers+' -> '+ (dataviz.got_peers/students.length)*100 +'%</td><td class="select"><button>Select</button></td></tr>');
+		}
+		
+		$('#get-results').click(function(){
+		
+			$.ajax({
+				url: "parselog.php",
+				success: function(data){
+					var results = JSON.parse(data);
+					allresults = results;
+					showTop50(allresults);
+				}
+			});
+			
+			$('.results').removeClass('off');
+		});
+		
+		function showTop50(allresults){
+			var weighted = [];
+			// weight all results
+			for(i=0; i<allresults.allresults.length; i++){
+				var s = allresults.allresults[i].students.students;
+				var d = dataviz(s, students);
+				var one = d.got_one/s.length*3;
+				console.log(d);
+				var first = d.got_first/s.length*2;
+				var peer = d.got_peers/s.length;
+				var weight = (one+first+peer)/6;
+				var w = {
+					"id":i,
+					"weight":weight
+				}
+				weighted.push(w);
+			}
+			// get top ones first
+			weighted = weighted.sort(function(obj1, obj2) {
+				return obj2.weight - obj1.weight;
+			});
+			// display 
+			for(i=0; i<weighted.length; i++){
+				var s = allresults.allresults[weighted[i].id].students.students;
+				showResults(dataviz(s, students), s, weighted[i].id);
+			}
+			$('.select button').click(function(){
+				var id = $(this).parent().parent().attr('data-id');
+				// cram allresults[weighted[i].id].results[1] object into tables from original page, or popup		
+				$.ajax({
+					type:"POST",
+					url:"session.php",
+					data: allresults.allresults[id],
+					success:function(data){
+						window.open("single.php", "_blank");
+					}
+				});
+				
+					
+			});
+			
+		}
+	
 		
 		$('#import-students').click(function(){
 			$(this).addClass('off');
@@ -161,29 +294,18 @@
 						}
 					});
 					if(teachers_done){
-						for(j=0;j<teachers.length;j++){
-							var choices = teachers[j].choices;
-							var arr = choices.split(" ");
-							$('.students tr').each(function(i){
-								for(k=0; k<arr.length; k++){
-									if($(this).find('.n-number').html() == arr[k]){
-										students[arr[k]].professor_preferred += teachers[j].name + " ";
-										$(this).find('.professor-preferred').html(teachers[j].name + " ");
-									}
-								}
-							});
-						}
+						printPreferred();
 					}
 				}
 			});			
 		});
+		
 		
 		$('#import-teachers').click(function(){
 			$(this).addClass('off');
 			$.ajax({
 				url: "convert.php?file=teachers.csv",
 				success: function(data){
-					console.log(data);
 					teachers = JSON.parse(data);
 					teachers = teachers.teachers;
 					var temp = $('.teachers .template');
@@ -215,22 +337,26 @@
 					});
 					
 					if(students_done){
-						for(j=0;j<teachers.length;j++){
-							var choices = teachers[j].choices;
-							var arr = choices.split(" ");
-							$('.students tr').each(function(i){
-								for(k=0; k<arr.length; k++){
-									if($(this).find('.n-number').html() == arr[k]){
-										students[arr[k]].professor_preferred += teachers[j].name + " ";
-										$(this).find('.professor-preferred').html(teachers[j].name + " ");
-									}
-								}
-							});
-						}
+						printPreferred();
 					}
 				}
 			});			
 		});
+		
+		function printPreferred(){
+			for(j=0;j<teachers.length;j++){
+				var choices = teachers[j].choices;
+				var arr = choices.split(" ");
+				$('.students tr').each(function(i){
+					for(k=0; k<arr.length; k++){
+						if($(this).find('.n-number').html() == arr[k]){
+							students[arr[k]].professor_preferred += teachers[j].name + " ";
+							$(this).find('.professor-preferred').html(students[arr[k]].professor_preferred);
+						}
+					}
+				});
+			}
+		}
 		
 		function checkForRun(){
 			if(students_done && teachers_done){
@@ -240,6 +366,7 @@
 		}
 		
 		function prepAlgorithm(){
+			printPreferred();
 			$('.number-sections .number').html(teachers.length);
 			$('.number-students .number').html(Object.size(students));
 			$('.cap .number').html(Math.ceil(Object.size(students)/teachers.length));
@@ -249,7 +376,6 @@
 				type:"POST",
 				data: {"students":students},
 				success: function(result){
-					console.log("success! " + result);
 					$.ajax({
 						url: "saveteachers.php",
 						type:"POST",
@@ -284,7 +410,7 @@
 					out = "Colleen Macklin";
 					break;
 				case 3:
-					out = "Melanie Crean";
+					out = "Melanie Creen";
 					break;
 				case 4:
 					out = "Anthony Deen";
@@ -308,10 +434,10 @@
 				case "John Sharp":
 					out = 1;
 					break;
-				case "Coleen Macklin":
+				case "Colleen Macklin":
 					out = 2;
 					break;
-				case "Melanie Crean":
+				case "Melanie Creen":
 					out = 3;
 					break;
 				case "Anthony Deen":

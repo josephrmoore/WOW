@@ -1,5 +1,6 @@
 <?php
 	if(!empty($_POST)){
+/* 		echo "<script>alert('". var_dump($_POST) ."')</script>"; */
 		$file = "log.txt";
 		$current = file_get_contents($file);
 		$current .= "\n\n\n";

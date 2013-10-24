@@ -10,7 +10,7 @@ jQuery(document).ready(function($){
 	var burroughs = [
 		"Katherine Moriwaki",
 		"John Sharp",
-		"Coleen Macklin",
+		"Colleen Macklin",
 		"Melanie Creen",
 		"Anthony Deen",
 		"Marko Tendefelt"
@@ -29,13 +29,24 @@ jQuery(document).ready(function($){
 	  success: function(d){
 	  	var counter = 0;
 	  	for(N in d.students){
+	  		var peers = d.students[N].peers;
+	  		var arr = peers.split(" ");
+	  		var counter2 = 0;
+	  		for(N2 in d.students){
+		  		for(i=0;i<arr.length;i++){
+			  		if(N2 == arr[i]){
+				  		arr[i] = counter2;
+			  		}
+		  		}
+		  		counter2++;
+	  		}
 			var s = {
 				"id": counter,
 				"name": d.students[N].name,
 				"current": d.students[N].current,
 				"NetID": N,
 				"choices" : [d.students[N].choices[0], d.students[N].choices[1], d.students[N].choices[2]],
-				"peers": [], // this will be a problem. need to convert from email to N#
+				"peers": arr, // this will be a problem. need to convert from email to N#
 				"thesis" : -1
 			}
 			counter++;
@@ -128,11 +139,11 @@ jQuery(document).ready(function($){
 			for(var i=0;i<students.length;i++){
 				var fr = '';
 				for(var j=0;j<students[i].peers.length;j++){
-					fr += characters[students[i].peers[j]];
+					fr += students[students[i].peers[j]].name;
 					fr += ', ';
 				}
 				fr = fr.substr(0, fr.length-2);
-				$('.students tbody').append('<tr><td>'+ characters[students[i].id] +'</td><td class="t">'+ burroughs[students[i].choices[0]] +'</td><td class="t">'+ burroughs[students[i].choices[1]] +'</td><td class="t">'+ burroughs[students[i].choices[2]] +'</td><td>'+ fr +'</td><td class="t">'+burroughs[students[i].thesis]+'</td></tr>');
+				$('.students tbody').append('<tr><td>'+ students[students[i].id].name +'</td><td class="t">'+ burroughs[students[i].choices[0]] +'</td><td class="t">'+ burroughs[students[i].choices[1]] +'</td><td class="t">'+ burroughs[students[i].choices[2]] +'</td><td>'+ fr +'</td><td class="t">'+burroughs[students[i].thesis]+'</td></tr>');
 			}
 			// Get dataviz data
 			var dataviz = dataviz();
@@ -147,6 +158,7 @@ jQuery(document).ready(function($){
 					} else {
 						p = prefs[i];
 					}
+					console.log(burroughs[i]);
 					sections[i] =  {
 						"id": i,
 						"teacher" : burroughs[i],
@@ -289,6 +301,34 @@ jQuery(document).ready(function($){
 				}
 				anyLeft();
 				printResults();
+				students_small = {
+					"students" : []
+				};
+				for(i=0;i<students.length;i++){
+					var s = {
+						"id": students[i].id,
+						"NetID": students[i].NetID,
+						"choices": students[i].choices,
+						"thesis": students[i].thesis,
+						"current": students[i].current,
+						"name": students[i].name
+					}
+					students_small.students.push(s);
+				}
+				var postdata = {
+					'theses' : theses,
+					'students': students_small
+				};
+				$.ajax({
+					url: "savelog.php",
+					type:"POST",
+					data: postdata,
+					success: function(result){
+						console.log(postdata);
+						console.log("success! " + result);
+						window.close();
+					}
+				});	
 			}
 		
 		
@@ -311,11 +351,11 @@ jQuery(document).ready(function($){
 					var pr = '';
 					var en = '';
 					for(var j=0;j<theses[i].teacher_pref.length;j++){
-						pr += characters[theses[i].teacher_pref[j]];
+						pr += students[theses[i].teacher_pref[j]].name;
 						pr += ', ';
 					}
 					for(var j=0;j<theses[i].enrolled.length;j++){
-						en += characters[theses[i].enrolled[j]];
+						en += students[theses[i].enrolled[j]].name;
 						en += ', ';
 					}
 					pr = pr.substr(0, pr.length-2);
@@ -415,24 +455,7 @@ jQuery(document).ready(function($){
 							}
 						}
 					}
-				}
-				
-				var postdata = {
-					'results': [
-						theses, students, unshuffled_students
-					]
-				};
-				$.ajax({
-					url: "savelog.php",
-					type:"POST",
-					data: postdata,
-					success: function(result){
-						console.log(postdata);
-						console.log("success! " + result);
-						window.close();
-					}
-				});			
-		
+				}		
 			}
 			
 			
