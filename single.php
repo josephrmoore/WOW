@@ -102,6 +102,7 @@ ul, ol, dl {
 				<th>Third Choice</th>
 				<th>Friends</th>
 				<th>Thesis Selection</th>
+				<th>First Semester Section</th>
 			</tr>
 			</thead>
 			<tbody>

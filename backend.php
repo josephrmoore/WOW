@@ -34,7 +34,6 @@
 				<th class="peers">Peers</th>
 				<th class="professor-preferred">Professor Preferred</th>
 				<th class="current-thesis">Current Thesis</th>
-				<th class="new-thesis">New Thesis</th>
 			</thead>
 			<tbody>
 				<tr class="template off">
@@ -46,7 +45,6 @@
 					<td class="peers" contenteditable="true"></td>
 					<td class="professor-preferred" contenteditable="true"></td>
 					<td class="current-thesis" contenteditable="true"></td>
-					<td class="new-thesis" contenteditable="true"></td>
 				</tr>
 			</tbody>
 		</table>
