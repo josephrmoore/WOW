@@ -142,32 +142,33 @@
 			var got_none = 0;
 			var got_one = 0;
 			var got_peers = 0;
-			for(var i=0;i<students.length;i++){
-				if(students[i].choices[0] == students[i].thesis){
+			for(var i=0;i<s.length;i++){
+				if(s[i].choices[0] == s[i].thesis){
 					got_first++;
-				} else if (students[i].choices[1] == students[i].thesis){
+				} else if (s[i].choices[1] == s[i].thesis){
 					got_second++;
-				} else if (students[i].choices[2] == students[i].thesis){
+				} else if (s[i].choices[2] == s[i].thesis){
 					got_third++
 				} else {
 					got_none++;
 				}
 				
 				
-				var p = s[students[i].NetID].peers;
-				var peers = [];
-				var parr = p.split(" ");
-				for(j=0;j<parr.length;j++){
-					parr[j] = s[parr[j]].id;
-				}
+				var p = students[s[i].NetID].peers; // string of Nnumbers
+				var peers = p.split(" "); // array of Nnumbers
 				var flag = false;
-				for(var j=0;j<peers.length;j++){
-					var peer_id = peers[j];
-					var peer = students[peer_id];
-					if(peer.thesis == students[i].thesis){
+				for(j=0;j<peers.length;j++){
+					for(k=0;k<s.length;k++){
+						if(s[k].NetID == peers[j]){
+							peers[j] = s[k].id;
+						}
+					}
+					var peer = s[peers[j]];
+					if(peer.thesis == s[i].thesis){
 						flag = true;
 					}
 				}
+
 				if(flag){
 					got_peers++;
 				}
@@ -183,7 +184,6 @@
 				"got_one" : got_one,
 				"got_peers" : got_peers
 			}
-	
 			return dataviz;
 	
 		}
@@ -202,7 +202,7 @@
 					showTop50(allresults);
 				}
 			});
-			$('#get-results').addClass('off');
+			$('.get-results').addClass('off');
 			$('.results').removeClass('off');
 		});
 		
@@ -211,9 +211,8 @@
 			// weight all results
 			for(i=0; i<allresults.allresults.length; i++){
 				var s = allresults.allresults[i].students.students;
-				var d = dataviz(s, students);
+				var d = dataviz(students, s);
 				var one = d.got_one/s.length*3;
-				console.log(d);
 				var first = d.got_first/s.length*2;
 				var peer = d.got_peers/s.length;
 				var weight = (one+first+peer)/6;
@@ -230,7 +229,7 @@
 			// display 
 			for(i=0; i<weighted.length; i++){
 				var s = allresults.allresults[weighted[i].id].students.students;
-				showResults(dataviz(s, students), s, weighted[i].id);
+				showResults(dataviz(students, s), s, weighted[i].id);
 			}
 			$('.select button').click(function(){
 				var id = $(this).parent().parent().attr('data-id');

@@ -5,6 +5,7 @@ var got_none = 0;
 var got_one = 0;
 var got_peers = 0;
 var ajaxed = false;
+var numstudents = 0;
 
 jQuery(document).ready(function($){
 	var burroughs = [
@@ -123,17 +124,19 @@ jQuery(document).ready(function($){
 					  	}
 				  	}
 			  	}
-			  	console.log(prefs);
 		  	}
 			// Initialize global variables - generateThesis ***MUST*** always be before generateStudents
-			var unshuffled_students = generateStudents(student_data);		
-			var shuffled_ids = uniqueRandom(unshuffled_students.length, unshuffled_students.length);
+			var students = generateStudents(student_data);	
+			numstudents = students.length;	
+			var shuffled_ids = uniqueRandom(students.length, students.length);
 			var theses = generateTheses(6);
 			getThesisInterest();
+/*
 			for(var i=0;i<unshuffled_students.length;i++){
 				// students[i] = unshuffled_students[i];
 				students[i] = unshuffled_students[shuffled_ids[i]];
 			}
+*/
 			// This is the algorithm
 			sausage_factory();
 			for(var i=0;i<students.length;i++){
@@ -158,7 +161,6 @@ jQuery(document).ready(function($){
 					} else {
 						p = prefs[i];
 					}
-					console.log(burroughs[i]);
 					sections[i] =  {
 						"id": i,
 						"teacher" : burroughs[i],
@@ -232,7 +234,6 @@ jQuery(document).ready(function($){
 			}
 		
 			function sausage_factory(){
-				
 				iteration++;		
 				// Initialize student interest data
 				for(var i=0;i<theses.length;i++){
@@ -244,19 +245,19 @@ jQuery(document).ready(function($){
 					var interested_students = [];
 		
 					for(var j=0;j<students.length;j++){
-						if(students[j].choices[0] == i){
+						if(students[shuffled_ids[j]].choices[0] == i){
 							first++;
-							interested_students.push(students[j].id);
+							interested_students.push(students[shuffled_ids[j]].id);
 						}
-						if(students[j].choices[1] == i){
+						if(students[shuffled_ids[j]].choices[1] == i){
 							second++;
-							interested_students.push(students[j].id);
+							interested_students.push(students[shuffled_ids[j]].id);
 						}
-						if(students[j].choices[2] == i){
+						if(students[shuffled_ids[j]].choices[2] == i){
 							third++;
-							interested_students.push(students[j].id);
+							interested_students.push(students[shuffled_ids[j]].id);
 						}
-						if(students[j].choices[2] != i && students[j].choices[1] != i && students[j].choices[0] != i){
+						if(students[shuffled_ids[j]].choices[2] != i && students[shuffled_ids[j]].choices[1] != i && students[shuffled_ids[j]].choices[0] != i){
 							not_chosen++;
 						}
 					}
@@ -324,7 +325,6 @@ jQuery(document).ready(function($){
 					type:"POST",
 					data: postdata,
 					success: function(result){
-						console.log(postdata);
 						console.log("success! " + result);
 						window.close();
 					}
@@ -369,11 +369,11 @@ jQuery(document).ready(function($){
 				// For all the students...
 				for(var j=0;j<students.length;j++){
 					// If they are not enrolled in this section and want to be...
-					if(students[j].choices[n] == i && students[j].thesis == -1){
+					if(students[shuffled_ids[j]].choices[n] == i && students[shuffled_ids[j]].thesis == -1){
 						// If there's still room...
 						if(theses[i].enrolled.length<theses[i].total){
 							// That student is enrolled in the section
-							addStudent(students[j],i);
+							addStudent(students[shuffled_ids[j]],i);
 							friendIn(n, i);
 							friendOut(n, i);
 						}
@@ -401,12 +401,12 @@ jQuery(document).ready(function($){
 				// For all the students...
 				for(var j=0;j<students.length;j++){
 					// If they are now enrolled in this section...
-					if(students[j].thesis == i){
-						for(var k=0;k<students[j].peers.length;k++){
+					if(students[shuffled_ids[j]].thesis == i){
+						for(var k=0;k<students[shuffled_ids[j]].peers.length;k++){
 							// If any of their peers selected this section as this iteration's choice (1st, 2nd, 3rd) and there's still room...
-							if(students[students[j].peers[k]].choices[n] == i && theses[i].enrolled.length<theses[i].total){
+							if(students[students[shuffled_ids[j]].peers[k]].choices[n] == i && theses[i].enrolled.length<theses[i].total){
 								// The peer is enrolled in the section
-								addStudent(students[students[j].peers[k]], i);
+								addStudent(students[students[shuffled_ids[j]].peers[k]], i);
 							}
 						}
 					}
@@ -417,12 +417,12 @@ jQuery(document).ready(function($){
 				// For all the students...
 				for(var j=0;j<students.length;j++){
 					// If they are not enrolled in this section and want to be...
-					if(students[j].choices[n] == i && students[j].thesis == -1){
-						for(var k=0;k<students[j].peers.length;k++){
+					if(students[shuffled_ids[j]].choices[n] == i && students[shuffled_ids[j]].thesis == -1){
+						for(var k=0;k<students[shuffled_ids[j]].peers.length;k++){
 							// If any of their peers are already enrolled in the section and there's still room...
-							if(students[students[j].peers[k]].thesis == i && theses[i].enrolled.length<theses[i].total){
+							if(students[students[shuffled_ids[j]].peers[k]].thesis == i && theses[i].enrolled.length<theses[i].total){
 								// That student is enrolled in the section
-								addStudent(students[j],i);
+								addStudent(students[shuffled_ids[j]],i);
 							}
 						}
 					}
@@ -433,11 +433,11 @@ jQuery(document).ready(function($){
 				// For all the students...
 				for(var j=0;j<students.length;j++){
 					// If they are not enrolled in this section and want to be...
-					if(students[j].choices[n] == i && students[j].thesis == -1){
+					if(students[shuffled_ids[j]].choices[n] == i && students[shuffled_ids[j]].thesis == -1){
 						// If there's still room...
 						if(theses[i].enrolled.length<theses[i].total){
 							// That student is enrolled in the section
-							addStudent(students[j],i);
+							addStudent(students[shuffled_ids[j]],i);
 						}
 					}
 				}
@@ -446,12 +446,12 @@ jQuery(document).ready(function($){
 			function anyLeft(){
 				// For each section...
 				for(var j=0;j<students.length;j++){
-					if(students[j].thesis == -1){
+					if(students[shuffled_ids[j]].thesis == -1){
 						for(var k=0;k<theses.length;k++){
 							// If there is space left
 							if(theses[k].enrolled.length<theses[k].total){
 								// Add that student
-								addStudent(students[j], k);
+								addStudent(students[shuffled_ids[j]], k);
 							}
 						}
 					}
@@ -462,8 +462,8 @@ jQuery(document).ready(function($){
 			function getChoice(section, choice){
 				var choosers = [];
 				for(var i=0;i<students.length;i++){
-					if(students[i].choices[choice] == section){
-						choosers.push(i);
+					if(students[shuffled_ids[i]].choices[choice] == section){
+						choosers.push(shuffled_ids[i]);
 					}
 				}
 				return choosers;
@@ -479,8 +479,8 @@ jQuery(document).ready(function($){
 			function studentsLeft(){
 				var sl = [];
 				for(var i=0;i<students.length;i++){
-					if(students[i].thesis == -1){
-						sl.push(i);
+					if(students[shuffled_ids[i]].thesis == -1){
+						sl.push(shuffled_ids[i]);
 					}
 				}
 				return sl;
@@ -489,21 +489,21 @@ jQuery(document).ready(function($){
 			function dataviz(){
 		
 				for(var i=0;i<students.length;i++){
-					if(students[i].choices[0] == students[i].thesis){
+					if(students[shuffled_ids[i]].choices[0] == students[shuffled_ids[i]].thesis){
 						got_first++;
-					} else if (students[i].choices[1] == students[i].thesis){
+					} else if (students[shuffled_ids[i]].choices[1] == students[shuffled_ids[i]].thesis){
 						got_second++;
-					} else if (students[i].choices[2] == students[i].thesis){
+					} else if (students[shuffled_ids[i]].choices[2] == students[shuffled_ids[i]].thesis){
 						got_third++
 					} else {
 						got_none++;
 					}
-					var peers = students[i].peers;
+					var peers = students[shuffled_ids[i]].peers;
 					var flag = false;
 					for(var j=0;j<peers.length;j++){
 						var peer_id = peers[j];
 						var peer = students[peer_id];
-						if(peer.thesis == students[i].thesis){
+						if(peer.thesis == students[shuffled_ids[i]].thesis){
 							flag = true;
 						}
 					}
@@ -529,25 +529,6 @@ jQuery(document).ready(function($){
 		
 		
 			}
-			
-			$('#run_me_again').click(function(){
-				got_first = 0;
-				got_second = 0;
-				got_third = 0;
-				got_none = 0;
-				got_one = 0;
-				got_peers = 0;
-				students_left = [];
-				theses = generateTheses(6);
-				unshuffled_students = generateStudents(student_data);
-				shuffled_ids = uniqueRandom(unshuffled_students.length, unshuffled_students.length);
-				students = [];
-				for(var i=0;i<unshuffled_students.length;i++){
-					students[i] = unshuffled_students[shuffled_ids[i]];
-				}
-				// This is the algorithm
-				sausage_factory();
-			});
 			
 			$('#show_hide_students').click(function(){
 				if($('table.students').hasClass('off')){
@@ -635,7 +616,7 @@ function drawChart(){
     data.addColumn('number', 'Students');
     data.addRows([
       ['In a section with a peer', got_peers],
-      ['In a section with no peers', (80-got_peers)]
+      ['In a section with no peers', (numstudents-got_peers)]
     ]);
 
     // Set chart options

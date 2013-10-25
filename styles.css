@@ -61,6 +61,7 @@ table {
 	border-collapse:collapse;
 	border:1px solid #ccc;
 	margin:40px;
+	background: #fff;
 }
 
 td, th {
@@ -117,6 +118,64 @@ ul, ol, dl {
 body {
 	font: 12px/1.2 "Helvetica" normal;
 }
+
+#wrapper {
+	padding: 20px;
+}
+
+h2 {
+	font-size: 24px;
+}
+
+.students {
+	background: #eee;
+	padding: 20px;
+}
+
+.teachers {
+	background: #e1e1e1;
+	padding: 20px;
+}
+
+.run {
+	position: relative;
+}
+
+.attributes {
+	border: 1px solid #ccc;
+	padding: 20px;
+	background: #eee;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+.attributes .number {
+	font-weight: bold;
+	font-size: 18px;
+}
+
+.run input {
+	background: url(bigredbutton.png) no-repeat 0 0 transparent;
+	border: none;
+	text-indent: -9999px;
+	width: 330px;
+	height: 315px;
+	cursor: pointer;
+	margin: 20px auto;
+	display: block;
+}
+
+.get-results {
+	text-align: center;
+	margin-top: 40px;
+}
+
+#get-results {
+	display: inline-block;
+	margin: 0;
+}
+
 
 button {
 	margin: 20px;
