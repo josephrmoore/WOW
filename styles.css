@@ -1,0 +1,220 @@
+/* Reset */
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td, button {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+  background: transparent;
+}
+body {
+  line-height: 1;
+}
+ol, ul {
+  list-style: none;
+}
+blockquote, q {
+  quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none;
+}
+
+/* remember to define focus styles! */
+:focus {
+  outline: 0;
+}
+
+/* remember to highlight inserts somehow! */
+ins {
+  text-decoration: none;
+}
+del {
+  text-decoration: line-through;
+}
+
+/* tables still need 'cellspacing="0"' in the markup */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+article,aside,canvas,details,figcaption,figure,
+footer,header,hgroup,menu,nav,section,summary, video {
+  display:block;
+}
+
+table {
+	text-align:right;
+	border-collapse:collapse;
+	border:1px solid #ccc;
+	margin:40px;
+	background: #fff;
+}
+
+td, th {
+	border:1px solid #ccc;
+	padding:3px 5px;
+}
+
+th {
+	background:#fefcf4;
+}
+
+td em {
+	font-size:9px;
+}
+
+td:last-child {
+	border-right:none;
+}
+
+.chart {
+	display:inline;
+	float:left;
+}
+
+.t {
+	background:#eee;
+}
+
+.dataviz td {
+	background:#eee;
+}
+
+.show-hide {
+	background:#ccc;
+	color:#000;
+	font-size:18px;
+	border:1px solid #000;
+	float:left;
+	margin-right:20px;
+	cursor:pointer;
+	width:28px;
+}
+
+ul, ol, dl {
+	list-style:none;
+}
+
+.off {
+	display:none !important;
+}
+
+
+
+body {
+	font: 12px/1.2 "Helvetica" normal;
+}
+
+#wrapper {
+	padding: 20px;
+}
+
+h2 {
+	font-size: 24px;
+}
+
+.students {
+	background: #eee;
+	padding: 20px;
+}
+
+.teachers {
+	background: #e1e1e1;
+	padding: 20px;
+}
+
+.run {
+	position: relative;
+}
+
+.attributes {
+	border: 1px solid #ccc;
+	padding: 20px;
+	background: #eee;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+.attributes .number {
+	font-weight: bold;
+	font-size: 18px;
+}
+
+.run input {
+	background: url(bigredbutton.png) no-repeat 0 0 transparent;
+	border: none;
+	text-indent: -9999px;
+	width: 330px;
+	height: 315px;
+	cursor: pointer;
+	margin: 20px auto;
+	display: block;
+}
+
+.get-results {
+	text-align: center;
+	margin-top: 40px;
+}
+
+#get-results {
+	display: inline-block;
+	margin: 0;
+}
+
+
+button {
+	margin: 20px;
+	display: block;
+	background: #ccc;
+	border: 1px solid #666;
+	border-radius: 4px;
+	padding: 3px 10px;
+}
+
+td, .teachers span, .teachers p {
+	cursor: pointer;
+}
+
+.no-edit {
+	background: #eee;
+	cursor:default!important;
+}
+
+h1 {
+	font-size: 36px;
+	margin-bottom: 20px;
+}
+
+/* Turning off elements */
+
+.off {
+	display:none;
+}
+
+/* Clearing Floats */
+
+.group:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0;
+}
+* html .group             { zoom: 1; } /* IE6 */
+*:first-child+html .group { zoom: 1; } /* IE7 */
