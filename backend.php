@@ -151,24 +151,34 @@
 					got_none++;
 				}
 				
-				
-				var p = students[s[i].NetID].peers; // string of Nnumbers
-				var peers = p.split(" "); // array of Nnumbers
-				var flag = false;
-				for(j=0;j<peers.length;j++){
-					for(k=0;k<s.length;k++){
-						if(s[k].NetID == peers[j]){
-							peers[j] = s[k].id;
+				if(s[i].NetID){
+					console.log(s[i].NetID);
+					var p = students[s[i].NetID].peers; // string of Nnumbers
+					var peers = p.split(" "); // array of Nnumbers
+					var flag = false;
+					if(peers.length>0){
+						for(j=0;j<peers.length;j++){
+							if(peers[j] == ""){
+								peers.splice(j,1);
+								console.log(peers);
+							}
+							for(k=0;k<s.length;k++){
+								if(s[k].NetID == peers[j]){
+									peers[j] = s[k].id;
+								}
+							}
+							if(peers[j] && peers[j] != ""){
+								console.log(peers[j]);
+								var peer = s[peers[j]];
+								if(peer.thesis == s[i].thesis){
+									flag = true;
+								}
+							}
 						}
 					}
-					var peer = s[peers[j]];
-					if(peer.thesis == s[i].thesis){
-						flag = true;
+					if(flag){
+						got_peers++;
 					}
-				}
-
-				if(flag){
-					got_peers++;
 				}
 			}
 	
@@ -356,7 +366,8 @@
 				var arr = choices.split(" ");
 				$('.students tr').each(function(i){
 					for(k=0; k<arr.length; k++){
-						if($(this).find('.n-number').html() == arr[k]){
+						if($(this).find('.n-number').html() == arr[k] && $(this).find('.n-number').html() != ""){
+							console.log($(this).find('.name').html());
 							students[arr[k]].professor_preferred += teachers[j].name + " ";
 							$(this).find('.professor-preferred').html(students[arr[k]].professor_preferred);
 						}

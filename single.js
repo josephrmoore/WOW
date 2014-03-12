@@ -62,12 +62,17 @@ jQuery(document).ready(function($){
 		console.log(students);
 		for(var i=0;i<students.length;i++){
 			var fr = '';
+			if(students[i].peers.length > 0){
 			for(var j=0;j<students[i].peers.length;j++){
-				fr += students[students[i].peers[j]].name;
-				fr += ', ';
-			}
+				if(students[i].peers[j] && students[i].peers[j] != ""){
+					fr += students[students[i].peers[j]].name;
+					fr += ', ';
+
+				}
 			fr = fr.substr(0, fr.length-2);
 			$('.students tbody').append('<tr><td>'+ students[students[i].id].name +'</td><td class="t">'+ burroughs[students[i].choices[0]] +'</td><td class="t">'+ burroughs[students[i].choices[1]] +'</td><td class="t">'+ burroughs[students[i].choices[2]] +'</td><td>'+ fr +'</td><td class="t">'+burroughs[students[i].thesis]+'</td><td class="t">'+students[students[i].id].current+'</td></tr>');
+			}
+			}
 		}
 	// Get dataviz data
 	var dataviz = dataviz();
@@ -422,10 +427,12 @@ jQuery(document).ready(function($){
 			var peers = students[i].peers;
 			var flag = false;
 			for(var j=0;j<peers.length;j++){
-				var peer_id = peers[j];
-				var peer = students[peer_id];
-				if(peer.thesis == students[i].thesis){
-					flag = true;
+				if(peers[j] && peers[j] != ""){
+					var peer_id = peers[j];
+					var peer = students[peer_id];
+					if(peer.thesis == students[i].thesis){
+						flag = true;
+					}
 				}
 			}
 			if(flag){
