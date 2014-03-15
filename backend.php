@@ -409,22 +409,25 @@
 			out = "No Choice";
 			switch(parseInt(_in)){
 				case 0:
-					out = "Katherine Moriwaki";
+					out = "David Carroll";
 					break;
 				case 1:
-					out = "John Sharp";
+					out = "Anezka Sebek";
 					break;
 				case 2:
 					out = "Colleen Macklin";
 					break;
 				case 3:
-					out = "Melanie Creen";
+					out = "Melanie Crean";
 					break;
 				case 4:
 					out = "Anthony Deen";
 					break;
 				case 5:
 					out = "Marko Tandefelt";
+					break;
+				case 6:
+					out = "Scott Pobiner";
 					break;
 				default:
 					out = "No Choice";
@@ -436,16 +439,16 @@
 		function convertTeacher(_in){
 			var out = -1;
 			switch(_in){
-				case "Katherine Moriwaki":
+				case "David Carroll":
 					out = 0;
 					break;
-				case "John Sharp":
+				case "Anezka Sebek":
 					out = 1;
 					break;
 				case "Colleen Macklin":
 					out = 2;
 					break;
-				case "Melanie Creen":
+				case "Melanie Crean":
 					out = 3;
 					break;
 				case "Anthony Deen":
@@ -454,6 +457,9 @@
 				case "Marko Tandefelt":
 					out = 5;
 					break;
+				case "Scott Pobiner":
+					out = 6;
+					break;					
 				default:
 					out = -1;
 					break;

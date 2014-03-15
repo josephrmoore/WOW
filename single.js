@@ -8,12 +8,13 @@ var ajaxed = false;
 
 jQuery(document).ready(function($){
 	var burroughs = [
-		"Katherine Moriwaki",
-		"John Sharp",
+		"David Carroll",
+		"Anezka Sebek",
 		"Colleen Macklin",
-		"Melanie Creen",
+		"Melanie Crean",
 		"Anthony Deen",
-		"Marko Tandefelt"
+		"Marko Tandefelt",
+		"Scott Pobiner"
 	];
 	var data;
 	var students_left = [];

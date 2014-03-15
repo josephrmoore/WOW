@@ -9,12 +9,13 @@ var numstudents = 0;
 
 jQuery(document).ready(function($){
 	var burroughs = [
-		"Katherine Moriwaki",
-		"John Sharp",
+		"David Carroll",
+		"Anezka Sebek",
 		"Colleen Macklin",
-		"Melanie Creen",
+		"Melanie Crean",
 		"Anthony Deen",
-		"Marko Tandefelt"
+		"Marko Tandefelt",
+		"Scott Pobiner"
 	];
 	var data;
 	var students_left = [];
@@ -58,7 +59,7 @@ jQuery(document).ready(function($){
 		  url: "teachers.json",
 		  success: function(data){
 		  	for(i=0;i<data.teachers.length;i++){
-			  	if(data.teachers[i].name == "Moriwaki"){
+			  	if(data.teachers[i].name == "Carroll"){
 				  	prefs[0] = [];
 				  	choices = data.teachers[i].choices.split(" ");
 				  	for(j=0;j<student_data.length;j++){
@@ -69,7 +70,7 @@ jQuery(document).ready(function($){
 					  	}
 				  	}
 			  	}
-			  	if(data.teachers[i].name == "Sharp"){
+			  	if(data.teachers[i].name == "Sebek"){
 				  	prefs[1] = [];
 				  	choices = data.teachers[i].choices.split(" ");
 				  	for(j=0;j<student_data.length;j++){
@@ -91,7 +92,7 @@ jQuery(document).ready(function($){
 					  	}
 				  	}		  	
 			  	}
-			  	if(data.teachers[i].name == "Creen"){
+			  	if(data.teachers[i].name == "Crean"){
 				  	prefs[3] = [];
 				  	choices = data.teachers[i].choices.split(" ");
 				  	for(j=0;j<student_data.length;j++){
@@ -124,12 +125,23 @@ jQuery(document).ready(function($){
 					  	}
 				  	}
 			  	}
+			  	if(data.teachers[i].name == "Pobiner"){
+				  	prefs[6] = [];
+				  	choices = data.teachers[i].choices.split(" ");
+				  	for(j=0;j<student_data.length;j++){
+					  	for(k=0; k<choices.length; k++){
+						  	if(choices[k] == student_data[j].NetID){
+							  	prefs[6].push(j);
+						  	}
+					  	}
+				  	}
+			  	}
 		  	}
 			// Initialize global variables - generateThesis ***MUST*** always be before generateStudents
 			var students = generateStudents(student_data);	
 			numstudents = students.length;	
 			var shuffled_ids = uniqueRandom(students.length, students.length);
-			var theses = generateTheses(6);
+			var theses = generateTheses(7);
 			getThesisInterest();
 /*
 			for(var i=0;i<unshuffled_students.length;i++){
