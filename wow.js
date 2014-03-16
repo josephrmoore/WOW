@@ -32,7 +32,7 @@ jQuery(document).ready(function($){
 	  	var counter = 0;
 	  	for(N in d.students){
 	  		var peers = d.students[N].peers;
-	  		var arr = peers.split(" ");
+	  		var arr = (true) ? peers.split(" ") : "";
 	  		var counter2 = 0;
 	  		for(N2 in d.students){
 		  		for(i=0;i<arr.length;i++){
@@ -415,10 +415,12 @@ jQuery(document).ready(function($){
 					// If they are now enrolled in this section...
 					if(students[shuffled_ids[j]].thesis == i){
 						for(var k=0;k<students[shuffled_ids[j]].peers.length;k++){
-							// If any of their peers selected this section as this iteration's choice (1st, 2nd, 3rd) and there's still room...
-							if(students[students[shuffled_ids[j]].peers[k]].choices[n] == i && theses[i].enrolled.length<theses[i].total){
-								// The peer is enrolled in the section
-								addStudent(students[students[shuffled_ids[j]].peers[k]], i);
+							if(students[shuffled_ids[j]].peers.length > 0 && students[shuffled_ids[j]].peers[k] !== undefined){
+								// If any of their peers selected this section as this iteration's choice (1st, 2nd, 3rd) and there's still room...
+								if(students[students[shuffled_ids[j]].peers[k]].choices[n] !== undefined && students[students[shuffled_ids[j]].peers[k]].choices[n] == i && theses[i].enrolled.length<theses[i].total){
+									// The peer is enrolled in the section
+									addStudent(students[students[shuffled_ids[j]].peers[k]], i);
+								}
 							}
 						}
 					}
