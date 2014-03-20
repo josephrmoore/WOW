@@ -57,16 +57,16 @@ if($file){
 function convertTeacher($in){
 	$out = -1;
 	switch($in){
-		case "Katherine Moriwaki":
+		case "David Carroll":
 			$out = 0;
 			break;
-		case "John Sharp":
+		case "Anezka Sebek":
 			$out = 1;
 			break;
 		case "Colleen Macklin":
 			$out = 2;
 			break;
-		case "Melanie Creen":
+		case "Melanie Crean":
 			$out = 3;
 			break;
 		case "Anthony Deen":
@@ -74,6 +74,9 @@ function convertTeacher($in){
 			break;
 		case "Marko Tandefelt":
 			$out = 5;
+			break;
+		case "Scott Pobiner";
+			$out = 6;
 			break;
 		default:
 			$out = -1;
