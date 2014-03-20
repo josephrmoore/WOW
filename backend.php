@@ -116,11 +116,12 @@
   <!-- Asynchronous Google Analytics snippet. Change UA-XXXXX-X to be your site's ID.
        mathiasbynens.be/notes/async-analytics-snippet -->
        <script>
+       // 
 	jQuery(document).ready(function($){
-		var students, teachers;
-		var students_done = false;
+		var students, teachers; // json objects for students and teachers
+		var students_done = false; // booleans for when 
 		var teachers_done = false;
-		var allresults = [];
+		var allresults = []; // what eventually gets stored in log file
 		$('form').submit(function(){
 			// send teacher and student data to overwrite JSON files
 			// run algorithm
@@ -151,19 +152,24 @@
 					got_none++;
 				}
 				
+				// console.log('backend.php students[s[i]]: ', students[s[i]]);
 				
 				var p = students[s[i].NetID].peers; // string of Nnumbers
-				var peers = p.split(" "); // array of Nnumbers
+				var peers = [];
+				peers = p.split(" "); // array of Nnumbers
 				var flag = false;
-				for(j=0;j<peers.length;j++){
-					for(k=0;k<s.length;k++){
-						if(s[k].NetID == peers[j]){
-							peers[j] = s[k].id;
+				if(peers.length>0){
+					for(j=0;j<peers.length;j++){
+						for(k=0;k<s.length;k++){
+							if(s[k].NetID == peers[j]){
+								peers[j] = s[k].id;
+							}
 						}
-					}
-					var peer = s[peers[j]];
-					if(peer.thesis == s[i].thesis){
-						flag = true;
+						// Joe changed s[peers[j]] to s[j] and it appeared to fix it. Not sure why, just sayin.
+						var peer = s[j];
+						if(peer.thesis == s[i].thesis){
+							flag = true;
+						}
 					}
 				}
 
@@ -172,7 +178,7 @@
 				}
 			}
 	
-			got_one = got_first+got_second+got_third;
+			got_one = got_first + got_second + got_third;
 	
 			var dataviz = {
 				"got_first" : got_first,
@@ -205,6 +211,7 @@
 		});
 		
 		function showTop50(allresults){
+			// which results in log file are most relevant
 			var weighted = [];
 			// weight all results
 			for(i=0; i<allresults.allresults.length; i++){
@@ -409,22 +416,25 @@
 			out = "No Choice";
 			switch(parseInt(_in)){
 				case 0:
-					out = "Katherine Moriwaki";
+					out = "David Carroll";
 					break;
 				case 1:
-					out = "John Sharp";
+					out = "Anezka Sebek";
 					break;
 				case 2:
 					out = "Colleen Macklin";
 					break;
 				case 3:
-					out = "Melanie Creen";
+					out = "Melanie Crean";
 					break;
 				case 4:
 					out = "Anthony Deen";
 					break;
 				case 5:
 					out = "Marko Tandefelt";
+					break;
+				case 6:
+					out = "Scott Pobiner";
 					break;
 				default:
 					out = "No Choice";
@@ -436,16 +446,16 @@
 		function convertTeacher(_in){
 			var out = -1;
 			switch(_in){
-				case "Katherine Moriwaki":
+				case "David Carroll":
 					out = 0;
 					break;
-				case "John Sharp":
+				case "Anezka Sebek":
 					out = 1;
 					break;
 				case "Colleen Macklin":
 					out = 2;
 					break;
-				case "Melanie Creen":
+				case "Melanie Crean":
 					out = 3;
 					break;
 				case "Anthony Deen":
@@ -454,6 +464,9 @@
 				case "Marko Tandefelt":
 					out = 5;
 					break;
+				case "Scott Pobiner":
+					out = 6;
+					break;					
 				default:
 					out = -1;
 					break;
