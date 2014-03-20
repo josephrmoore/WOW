@@ -1,3 +1,9 @@
+// this runs algorithm
+// attached to index.php
+// runs when popups open (25 times)
+// each time gets saved to log.txt
+// backend lets user see results of log.txt
+
 var got_first = 0;
 var got_second = 0;
 var got_third = 0;
@@ -8,6 +14,7 @@ var ajaxed = false;
 var numstudents = 0;
 
 jQuery(document).ready(function($){
+	// list of teachers
 	var burroughs = [
 		"David Carroll",
 		"Anezka Sebek",
@@ -17,11 +24,17 @@ jQuery(document).ready(function($){
 		"Marko Tandefelt",
 		"Scott Pobiner"
 	];
+	// unknown
 	var data;
+	// temporarily stores remaining students before they're placed in a thesis section
 	var students_left = [];
+	// container for json.students data
 	var students = [];
+	// unknown
 	var teacher_chosen;
+	// empty array to store teacher student preferences?
 	var prefs = [];
+	// variable for processed data after ajax loads students.json
 	var student_data = [];
 
 
@@ -29,27 +42,33 @@ jQuery(document).ready(function($){
 	  dataType: "json",
 	  url: "students.json",
 	  success: function(d){
+	  	// maybe not used
 	  	var counter = 0;
 	  	for(N in d.students){
 	  		var peers = d.students[N].peers;
+	  		// split string of peers into array
 	  		var arr = (true) ? peers.split(" ") : "";
+	  		// array index in student object of each peer
 	  		var counter2 = 0;
 	  		for(N2 in d.students){
+	  			// loop through students second time
 		  		for(i=0;i<arr.length;i++){
+		  			// store peer as an array index number instead of an N number
 			  		if(N2 == arr[i]){
 				  		arr[i] = counter2;
 			  		}
 		  		}
 		  		counter2++;
 	  		}
+	  		// single processed student gets pushed to student_data array
 			var s = {
-				"id": counter,
-				"name": d.students[N].name,
-				"current": d.students[N].current,
-				"NetID": N,
+				"id": counter, // maybe not used
+				"name": d.students[N].name, // students name
+				"current": d.students[N].current, // current thesis teacher
+				"NetID": N, // their N number
 				"choices" : [d.students[N].choices[0], d.students[N].choices[1], d.students[N].choices[2]],
-				"peers": arr, // this will be a problem. need to convert from email to N#
-				"thesis" : -1
+				"peers": arr, //  this will be a problem. need to convert from email to N#
+				"thesis" : -1 // their array, -1 means hasn't been sorted
 			}
 			counter++;
 			student_data.push(s);
@@ -60,16 +79,22 @@ jQuery(document).ready(function($){
 		  success: function(data){
 		  	for(i=0;i<data.teachers.length;i++){
 			  	if(data.teachers[i].name == "Carroll"){
+			  		// all section preferences
+			  		// student indices not n numbers
 				  	prefs[0] = [];
 				  	choices = data.teachers[i].choices.split(" ");
 				  	for(j=0;j<student_data.length;j++){
 					  	for(k=0; k<choices.length; k++){
+					  		// if professor's n number choice matches student's N number
 						  	if(choices[k] == student_data[j].NetID){
+						  		// each array has an index
+						  		// add array index of student from student_data to prefs 0 array 
 							  	prefs[0].push(j);
 						  	}
 					  	}
 				  	}
 			  	}
+			  	// repeat with next ... teachers
 			  	if(data.teachers[i].name == "Sebek"){
 				  	prefs[1] = [];
 				  	choices = data.teachers[i].choices.split(" ");
@@ -138,8 +163,11 @@ jQuery(document).ready(function($){
 			  	}
 		  	}
 			// Initialize global variables - generateThesis ***MUST*** always be before generateStudents
-			var students = generateStudents(student_data);	
-			numstudents = students.length;	
+			// create AJAX SCOPE STUDENT ARRAY!
+			var students = generateStudents(student_data);
+			// get number of students
+			numstudents = students.length;
+			// take students array and create a new array of all index number shuffled in a new order
 			var shuffled_ids = uniqueRandom(students.length, students.length);
 			var theses = generateTheses(7);
 			getThesisInterest();
@@ -151,6 +179,8 @@ jQuery(document).ready(function($){
 */
 			// This is the algorithm
 			sausage_factory();
+
+			// after algorithm runs, show stuff in results (single.php)
 			for(var i=0;i<students.length;i++){
 				var fr = '';
 				for(var j=0;j<students[students[i].id].peers.length;j++){
@@ -168,9 +198,11 @@ jQuery(document).ready(function($){
 			function generateTheses(total){
 				var sections = [];
 				for(var i=0;i<total;i++){
+					// if teacher doesn't have a student preference(?) add a blank array
 					if(!prefs[i]){
 						p = [];
 					} else {
+						// otherwise make p their set of preferences
 						p = prefs[i];
 					}
 					sections[i] =  {
@@ -189,6 +221,7 @@ jQuery(document).ready(function($){
 			}
 		
 			function getThesisInterest(){
+				// add student to total interest array to keep track of all students interested in each section / teacher
 				for(var i=0;i<theses.length;i++){
 					var interest = [];
 					var pref = [];
@@ -204,6 +237,8 @@ jQuery(document).ready(function($){
 			}
 		
 			function generateStudents(student_data){
+				// move contents from student_data into new students array
+				// push every student id into students_left
 				var students = [];
 				for(var i=0;i<student_data.length;i++){
 					students[i] = student_data[i];
@@ -215,6 +250,9 @@ jQuery(document).ready(function($){
 	
 		
 			function uniqueRandom(count, bound){
+				// has to do with shuffling student's order
+				// count = array length
+				// bound = range of data
 				if(bound>=count){
 					var set = [];
 					for(var j=0;j<count;j++){
@@ -246,14 +284,20 @@ jQuery(document).ready(function($){
 			}
 		
 			function sausage_factory(){
+				// after thesis object created
+				// data viz using google forms
 				iteration++;		
 				// Initialize student interest data
 				for(var i=0;i<theses.length;i++){
+					// totals for how many people want each teacher's thesis section 
 					var first = 0;
 					var second = 0;
 					var third = 0;
+					// how many students didn't pick them at all
 					var not_chosen = 0;
+					// total amount of people that picked them
 					var chosen = 0;
+					// all the students interested in a given section 
 					var interested_students = [];
 		
 					for(var j=0;j<students.length;j++){
@@ -280,7 +324,7 @@ jQuery(document).ready(function($){
 					theses[i].chosen = first+second+third;
 				}
 				
-			// Pre-Iteration
+				// Pre-Iteration (uncontested sections)
 				// For each section...
 				for(var i=0;i<theses.length;i++){
 					// See how many people picked it as their first choice. i=thesis section, 0=1st choice
@@ -289,6 +333,7 @@ jQuery(document).ready(function($){
 					if(choosers.length<=theses[i].total){
 						// Add them all to that section
 						for(var j=0;j<choosers.length;j++){
+							// add student to thesis without any other checks
 							addStudent(students[choosers[j]],i);					
 						}
 					}
@@ -415,9 +460,10 @@ jQuery(document).ready(function($){
 					// If they are now enrolled in this section...
 					if(students[shuffled_ids[j]].thesis == i){
 						for(var k=0;k<students[shuffled_ids[j]].peers.length;k++){
+							// console.log(students[shuffled_ids[j]].peers[k]);
 							if(students[shuffled_ids[j]].peers.length > 0 && students[shuffled_ids[j]].peers[k] !== undefined){
 								// If any of their peers selected this section as this iteration's choice (1st, 2nd, 3rd) and there's still room...
-								if(students[students[shuffled_ids[j]].peers[k]].choices[n] !== undefined && students[students[shuffled_ids[j]].peers[k]].choices[n] == i && theses[i].enrolled.length<theses[i].total){
+								if(students[students[shuffled_ids[j]].peers[k]] !== undefined && students[students[shuffled_ids[j]].peers[k]].choices[n] !== undefined && students[students[shuffled_ids[j]].peers[k]].choices[n] == i && theses[i].enrolled.length<theses[i].total){
 									// The peer is enrolled in the section
 									addStudent(students[students[shuffled_ids[j]].peers[k]], i);
 								}

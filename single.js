@@ -50,9 +50,11 @@ jQuery(document).ready(function($){
 				"thesis" : -1
 			}
 			for(i=0;i<theses.length;i++){
-				for(j=0;j<theses[i].enrolled.length;j++){
-					if(s.id == theses[i].enrolled[j]){
-						s.thesis = i;
+				if(theses[i].enrolled){
+					for(j=0;j<theses[i].enrolled.length;j++){
+						if(s.id == theses[i].enrolled[j]){
+							s.thesis = i;
+						}
 					}
 				}
 			}
@@ -60,15 +62,20 @@ jQuery(document).ready(function($){
 			student_data.push(s);
 		}
 		students = generateStudents(student_data);		
-		console.log(students);
 		for(var i=0;i<students.length;i++){
+			if(students[i].peers){
 			var fr = '';
 			for(var j=0;j<students[i].peers.length;j++){
-				fr += students[students[i].peers[j]].name;
-				fr += ', ';
+				for(var k=0;k<students.length;k++){
+					if(students[k].NetID == students[i].peers[j]){
+						fr += students[k].name;
+						fr += ', ';
+					}
+				}
 			}
 			fr = fr.substr(0, fr.length-2);
 			$('.students tbody').append('<tr><td>'+ students[students[i].id].name +'</td><td class="t">'+ burroughs[students[i].choices[0]] +'</td><td class="t">'+ burroughs[students[i].choices[1]] +'</td><td class="t">'+ burroughs[students[i].choices[2]] +'</td><td>'+ fr +'</td><td class="t">'+burroughs[students[i].thesis]+'</td><td class="t">'+students[students[i].id].current+'</td></tr>');
+			}
 		}
 	// Get dataviz data
 	var dataviz = dataviz();
@@ -76,6 +83,7 @@ jQuery(document).ready(function($){
   	ajaxed = true;
   	
   	$('#export-csv').click(function(){
+  		console.log("set_id: ", set_id);
   	  	var post = {
 	  		"sections": [],
 	  		"id": set_id
@@ -84,10 +92,12 @@ jQuery(document).ready(function($){
   			var t = {};
 	  		t.teacher = burroughs[i];
 	  		t.students = [];
+	  		if(theses[i].enrolled){
 	  		for(j=0;j<theses[i].enrolled.length;j++){
 		  		t.students.push(students[theses[i].enrolled[j]].NetID);
 	  		}
 	  		post.sections.push(t);
+	  		}
   		}
 	  	$.ajax({
 		  	url: "exportresult.php",
@@ -272,6 +282,7 @@ jQuery(document).ready(function($){
 		for(var i=0;i<theses.length;i++){
 			var pr = '';
 			var en = '';
+			if(theses[i].teacher_pref){
 			for(var j=0;j<theses[i].teacher_pref.length;j++){
 				pr += students[theses[i].teacher_pref[j]].name;
 				pr += ', ';
@@ -283,6 +294,7 @@ jQuery(document).ready(function($){
 			pr = pr.substr(0, pr.length-2);
 			en = en.substr(0, en.length-2);
 			$('.i-' + iteration + ' .theses tbody').append('<tr><td>'+burroughs[i]+'</td><td>'+theses[i].choices[0]+'</td><td>'+theses[i].choices[1]+'</td><td>'+theses[i].choices[2]+'</td><td>'+theses[i].chosen+'</td><td>'+theses[i].not_chosen+'</td><td>'+pr+'</td><td>'+en+'</td></tr>');
+			}
 		}
 	}
 	
@@ -424,9 +436,14 @@ jQuery(document).ready(function($){
 			var flag = false;
 			for(var j=0;j<peers.length;j++){
 				var peer_id = peers[j];
-				var peer = students[peer_id];
-				if(peer.thesis == students[i].thesis){
-					flag = true;
+				var peer; 
+				for(var k=0;k<students.length;k++){
+					if(students[k].NetID == peer_id){
+						peer = students[k];
+						if(peer.thesis == students[i].thesis){
+							flag = true;
+						}
+					}
 				}
 			}
 			if(flag){

@@ -116,11 +116,12 @@
   <!-- Asynchronous Google Analytics snippet. Change UA-XXXXX-X to be your site's ID.
        mathiasbynens.be/notes/async-analytics-snippet -->
        <script>
+       // 
 	jQuery(document).ready(function($){
-		var students, teachers;
-		var students_done = false;
+		var students, teachers; // json objects for students and teachers
+		var students_done = false; // booleans for when 
 		var teachers_done = false;
-		var allresults = [];
+		var allresults = []; // what eventually gets stored in log file
 		$('form').submit(function(){
 			// send teacher and student data to overwrite JSON files
 			// run algorithm
@@ -151,19 +152,24 @@
 					got_none++;
 				}
 				
+				// console.log('backend.php students[s[i]]: ', students[s[i]]);
 				
 				var p = students[s[i].NetID].peers; // string of Nnumbers
-				var peers = p.split(" "); // array of Nnumbers
+				var peers = [];
+				peers = p.split(" "); // array of Nnumbers
 				var flag = false;
-				for(j=0;j<peers.length;j++){
-					for(k=0;k<s.length;k++){
-						if(s[k].NetID == peers[j]){
-							peers[j] = s[k].id;
+				if(peers.length>0){
+					for(j=0;j<peers.length;j++){
+						for(k=0;k<s.length;k++){
+							if(s[k].NetID == peers[j]){
+								peers[j] = s[k].id;
+							}
 						}
-					}
-					var peer = s[peers[j]];
-					if(peer.thesis == s[i].thesis){
-						flag = true;
+						// Joe changed s[peers[j]] to s[j] and it appeared to fix it. Not sure why, just sayin.
+						var peer = s[j];
+						if(peer.thesis == s[i].thesis){
+							flag = true;
+						}
 					}
 				}
 
@@ -172,7 +178,7 @@
 				}
 			}
 	
-			got_one = got_first+got_second+got_third;
+			got_one = got_first + got_second + got_third;
 	
 			var dataviz = {
 				"got_first" : got_first,
@@ -205,6 +211,7 @@
 		});
 		
 		function showTop50(allresults){
+			// which results in log file are most relevant
 			var weighted = [];
 			// weight all results
 			for(i=0; i<allresults.allresults.length; i++){
